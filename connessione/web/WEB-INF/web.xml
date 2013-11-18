@@ -13,4 +13,11 @@
             30
         </session-timeout>
     </session-config>
+    <listener>
+        <description>listener</description>
+        <listener-class>WebappContextListener</listener-class>
+    </listener>
+    <context-param>
+        <param-name>dburl</param-name>
+        <param-value>jdbc:derby:C:\Users\giovanni\Documents\GitHub\forum\DBforum;user=forum;password=forum</param-value>
 </web-app>

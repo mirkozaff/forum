@@ -43,10 +43,9 @@ public class ServletLogin extends HttpServlet {
             try{
           InputStreamReader inp = new InputStreamReader(input);
           BufferedReader reader = new BufferedReader(inp);
-          PrintWriter pw = response.getWriter();
-          String text = "";
+          String text;
           while((text = reader.readLine()) != null){
-           pw.println(text);
+           out.println(text);
           }  
             }finally{
             out.close();      
