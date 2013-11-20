@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package servlet_package;
 
 import db_package.User;
@@ -18,11 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author giovanni
- */
-public class servlet extends HttpServlet {
+
+public class ServletCheckLogin extends HttpServlet {
 
     User user;
     DBmanager manager;
@@ -49,7 +40,7 @@ public class servlet extends HttpServlet {
             out.println("<title>Servlet servlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet servlet at " + user.getName()+ " " + user.getPassword() + "</h1>");
+            out.println("<h1>Utente nel database: " + user.getName()+ " " + user.getPassword() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         } finally {
@@ -89,7 +80,7 @@ public class servlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServletCheckLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -107,7 +98,7 @@ public class servlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(servlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServletCheckLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
