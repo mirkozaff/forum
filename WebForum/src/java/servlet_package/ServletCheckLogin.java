@@ -28,7 +28,7 @@ public class ServletCheckLogin extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");     //mi preparo per rispondere
         PrintWriter out = response.getWriter();
         String loginfail = "loginfail.html";
-        String loginsuccess = "menu.html";
+        String loginsuccess = "mainPage.html";
         
         this.manager = new DBmanager();  //mi connetto al database
          

@@ -13,18 +13,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet(name = "ServletLogin", urlPatterns = {"/ServletLogin"})
-public class ServletLogin extends HttpServlet {
-
+@WebServlet(name = "ServletMainPage", urlPatterns = {"/ServletMainPage"})
+public class ServletMainPage extends HttpServlet {
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String filename = "signin.html";
-        PrintWriter out = response.getWriter();
+        
+        String mainPage = "mainPage.html";
+        PrintWriter out = response.getWriter();        
+        
         try {
-           ServletContext context = getServletContext();
-           InputStream inp = context.getResourceAsStream(filename);
-           if (inp != null) {
+            ServletContext context = getServletContext();
+            InputStream inp = context.getResourceAsStream(mainPage);
+            if (inp != null) {
                InputStreamReader isr = new InputStreamReader(inp);
                BufferedReader reader = new BufferedReader(isr);
                String text = "";
@@ -32,10 +34,11 @@ public class ServletLogin extends HttpServlet {
                    out.println(text);
                }
            }
-        }finally {
+        } finally {
             out.close();
         }
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -74,4 +77,5 @@ public class ServletLogin extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }
