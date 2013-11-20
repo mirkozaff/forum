@@ -8,6 +8,14 @@
         <servlet-name>servlet</servlet-name>
         <url-pattern>/servlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>servletLogin</servlet-name>
+        <servlet-class>servlet_package.ServletLogin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>servletLogin</servlet-name>
+        <url-pattern>/servletLogin</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

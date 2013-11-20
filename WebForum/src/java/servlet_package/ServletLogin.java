@@ -1,47 +1,38 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package servlet_package;
 
-import db_package.User;
-import db_package.DBmanager;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ *
+ * @author giovanni
+ */
+@WebServlet(name = "ServletLogin", urlPatterns = {"/ServletLogin"})
+public class ServletLogin extends HttpServlet {
 
-public class ServletCheckLogin extends HttpServlet {
-
-    User user;
-    DBmanager manager;
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
-    
-        response.setContentType("text/html;charset=UTF-8");     //mi preparo per rispondere
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String filename = "signin.html";
         PrintWriter out = response.getWriter();
-        String loginfail = "loginfail.html";
-        String loginsuccess = "menu.html";
-        
-        this.manager = new DBmanager();  //mi connetto al database
-         
-        String name = request.getParameter("name");   //prendo i parametri dala richiesta
-        String password = request.getParameter("password"); 
-        
-        user = manager.authenticate(name, password);   //vedo se i parametri sono corretti
-        System.out.println("autenticato");
-        
-        if(user != null){ //se i parametri ci sono nel database
         try {
            ServletContext context = getServletContext();
-           InputStream inp = context.getResourceAsStream(loginsuccess);
+           InputStream inp = context.getResourceAsStream(filename);
            if (inp != null) {
                InputStreamReader isr = new InputStreamReader(inp);
                BufferedReader reader = new BufferedReader(isr);
@@ -52,27 +43,8 @@ public class ServletCheckLogin extends HttpServlet {
            }
         }finally {
             out.close();
-        }  
-        }else{    //se i parametri nn ci sono
-        try {
-           ServletContext context = getServletContext();
-           InputStream inp = context.getResourceAsStream(loginfail);
-           if (inp != null) {
-               InputStreamReader isr = new InputStreamReader(inp);
-               BufferedReader reader = new BufferedReader(isr);
-               String text = "";
-               while ((text = reader.readLine()) != null) {
-                   out.println(text);
-               }
-           }
-        }finally {
-            out.close();
-        }  
         }
     }
-
-    
-    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -85,11 +57,7 @@ public class ServletCheckLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ServletCheckLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -103,11 +71,7 @@ public class ServletCheckLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ServletCheckLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -119,5 +83,4 @@ public class ServletCheckLogin extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
