@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package bho;
+package db_package;
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -20,16 +20,18 @@ import java.util.logging.Logger;
  * @author giovanni
  */
 public class DBmanager implements Serializable{
+    
     private transient Connection con;
 
-    public DBmanager(String dburl) throws SQLException{
+    public DBmanager () throws SQLException{
        try {
-          Class.forName("org.apache.derby.jdbc.EmbeddedDriver",true,getClass().getClassLoader());
+          Class.forName("org.apache.derby.jdbc.ClientDriver",true,getClass().getClassLoader());
+           System.out.println("caricato driver");
        }catch(Exception e){
            throw new RuntimeException(e.toString(), e);
        }
-       Connection con = DriverManager.getConnection(dburl);
-       this.con = con;
+       this.con = DriverManager.getConnection("jdbc:derby://localhost:1527/DBforum","forum","forum");
+        System.out.println("connessione al db fatta");
     }
     public static void shutdown(){
         try{
@@ -61,5 +63,3 @@ public class DBmanager implements Serializable{
         }   
     }
 }
-    
-

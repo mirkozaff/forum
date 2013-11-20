@@ -4,18 +4,15 @@
  * and open the template in the editor.
  */
 
-package bho;
-
-import java.io.Serializable;
+package db_package;
 
 /**
  *
  * @author giovanni
  */
-public class User implements Serializable{
+public class User {
     private String name;
     private String password;
-    private int id;
 
     public String getName() {
         return name;
@@ -31,14 +28,6 @@ public class User implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
     
 }
