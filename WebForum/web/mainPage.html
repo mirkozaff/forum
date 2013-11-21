@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
+    <style>
+	.btnmio
+	{
+  padding: -3px -3px;
+  border-radius: 0px;
+	}
+	</style>
 
     <title>Main Page</title>
 
@@ -26,6 +33,31 @@
   </head>
 
   <body>
+      <nav class="navbar navbar-default" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">HOME</a>
+  </div>
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#">dati utente</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">notifiche<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">notifica dal gruppo x</a></li>
+        </ul>
+      </li>
+	  <li><button class="btn btnmio btn-lg btn-primary" type="submit">Logout</button></li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
 
     <div class="container">
         <div class="form-signin">
@@ -48,5 +80,9 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
