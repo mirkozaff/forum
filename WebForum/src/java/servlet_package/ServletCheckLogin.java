@@ -30,7 +30,7 @@ public class ServletCheckLogin extends HttpServlet {
         String loginfail = "loginfail.html";
         String loginsuccess = "mainPage.html";
         
-        this.manager = new DBmanager();  //mi connetto al database
+        this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");  //mi connetto al database
          
         String name = request.getParameter("name");   //prendo i parametri dala richiesta
         String password = request.getParameter("password"); 
