@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 public class ServletCheckLogin extends HttpServlet {
@@ -37,6 +38,12 @@ public class ServletCheckLogin extends HttpServlet {
         
         user = manager.authenticate(name, password);   //vedo se i parametri sono corretti
         System.out.println("autenticato");
+        
+        HttpSession session = request.getSession();
+        if (session.isNew()){
+            
+        }
+        
         
         if(user != null){ //se i parametri ci sono nel database
         try {
