@@ -28,16 +28,20 @@
   <body>
 
     <div class="container">
-        <form class="form-signin" action="servlet" method="post">
-        <h2 class="form-signin-heading">Main Page</h2>
-        <div class="list-group">
-            <a href="#" class="list-group-item">Inviti</a>
-            <a href="#" class="list-group-item">Gruppi</a>
-            <a href="#" class="list-group-item">Crea Gruppo</a>
+        <div class="form-signin">
+        <!-- <h2 class="form-signin-heading">Main Page</h2> -->
+        <div class="panel panel-primary">            
+            <div class="panel-body">
+                <a href="menu.html" class="btn btn-lg btn-link">Dati Utente</a> <br>
+                <form method="get" action="menu.html">    
+                    <button type="submit" class="btn btn-lg btn-link">Inviti</button>
+                </form>
+                <button type="button" class="btn btn-lg btn-link">Gruppi</button> <br>
+                <button type="button" class="btn btn-lg btn-link">Crea Gruppo</button> <br>                
+            </div>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="button">Logout</button>
-        </form>
-
+        </div>       
     </div> <!-- /container -->
 
 
