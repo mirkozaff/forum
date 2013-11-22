@@ -20,7 +20,7 @@ public class ServletMainPage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String mainPage = "mainPage.html";
+        String mainPage = "forumHTML/mainPage.html";
         PrintWriter out = response.getWriter();        
         
         try {

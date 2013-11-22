@@ -19,7 +19,7 @@ public class ServletLogin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String filename = "signin.html";
+        String filename = "forumHTML/signin.html";
         PrintWriter out = response.getWriter();
         try {
            ServletContext context = getServletContext();
