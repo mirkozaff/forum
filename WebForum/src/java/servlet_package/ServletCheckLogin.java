@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
@@ -21,7 +20,7 @@ import javax.servlet.http.HttpSession;
 
 public class ServletCheckLogin extends HttpServlet {
 
-    User user;
+    User user = new User();
     DBmanager manager;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -37,57 +36,66 @@ public class ServletCheckLogin extends HttpServlet {
         String name = request.getParameter("name");   //prendo i parametri dala richiesta
         String password = request.getParameter("password"); 
         
-        user = manager.authenticate(name, password);   //vedo se i parametri sono corretti
-        System.out.println("autenticato");
+        if(manager.authenticate(name, password, user)){ //se l'user esiste nel database e la password è corretta
         
-        // richiesta sessione
-        HttpSession session = request.getSession();
-        String sessionID;
-        String sessionFeedback;
-        
-        if(session.isNew()){
-            sessionID = UUID.randomUUID().toString();
-            session.setAttribute("JSESSIONID", sessionID);
-            sessionFeedback = "Prima connessione";
-            System.out.println(sessionFeedback);
-        }
-        else{
-            sessionID = session.getAttribute("JSESSIONID").toString();
-            sessionFeedback = "Gia connesso";  
-            System.out.println(sessionFeedback);
-        }
-        
-        
-        if(user != null){ //se i parametri ci sono nel database
-        try {
-           ServletContext context = getServletContext();
-           InputStream inp = context.getResourceAsStream(loginsuccess);
-           if (inp != null) {
-               InputStreamReader isr = new InputStreamReader(inp);
-               BufferedReader reader = new BufferedReader(isr);
-               String text = "";
-               while ((text = reader.readLine()) != null) {
-                   out.println(text);
-               }
-           }
-        }finally {
-            out.close();
-        }  
+            System.out.println("autenticato");
+            System.out.println(user.getName());
+            System.out.println(user.getPassword());
+
+            // richiesta sessione
+            HttpSession session = request.getSession();
+            String sessionID, sessionUser;
+            String sessionFeedback;
+
+            if(session.isNew()){
+                //sessionID = UUID.randomUUID().toString();
+                //session.setAttribute("JSESSIONID", sessionID);
+                session.setAttribute("name", user.getName());
+                
+                sessionFeedback = "Prima connessione";
+                System.out.println(sessionFeedback);
+            }
+            else{
+                
+                 
+                //sessionID = session.getAttribute("JSESSIONID").toString();
+                sessionUser = session.getAttribute("name").toString();
+                System.out.println("sessionID: " + session.getId());
+                System.out.println("sessionUser: " + sessionUser);
+                sessionFeedback = "Gia connesso";  
+                System.out.println(sessionFeedback);
+            }
+            try {
+                ServletContext context = getServletContext();
+                InputStream inp = context.getResourceAsStream(loginsuccess);
+                if (inp != null) {
+                    InputStreamReader isr = new InputStreamReader(inp);
+                    BufferedReader reader = new BufferedReader(isr);
+                    String text = "";
+                    while ((text = reader.readLine()) != null) {
+                        out.println(text);
+                    }
+                }
+            }finally {
+                out.close();
+            }  
         }else{    //se i parametri nn ci sono
-        try {
-           ServletContext context = getServletContext();
-           InputStream inp = context.getResourceAsStream(loginfail);
-           if (inp != null) {
-               InputStreamReader isr = new InputStreamReader(inp);
-               BufferedReader reader = new BufferedReader(isr);
-               String text = "";
-               while ((text = reader.readLine()) != null) {
-                   out.println(text);
-               }
-           }
-        }finally {
-            out.close();
-        }  
+            
+            System.out.println("Utente non esistente");
+            try {
+                ServletContext context = getServletContext();
+                InputStream inp = context.getResourceAsStream(loginfail);
+                if (inp != null) {
+                    InputStreamReader isr = new InputStreamReader(inp);
+                    BufferedReader reader = new BufferedReader(isr);
+                    String text = "";
+                    while ((text = reader.readLine()) != null) {
+                        out.println(text);
+                    }
+                }
+            }finally {
+                out.close();
+             }  
         }
     }
 

@@ -30,7 +30,7 @@ public class DBmanager implements Serializable{
             Logger.getLogger(DBmanager.class.getName()).info(ex.getMessage());
         }
     }
-    public User authenticate(String name, String password) throws SQLException{
+    public boolean authenticate(String name, String password, User user) throws SQLException{
         PreparedStatement stm = con.prepareStatement("SELECT * FROM utenti WHERE name= ? AND password = ?");
         try{
             stm.setString(1, name);
@@ -38,12 +38,11 @@ public class DBmanager implements Serializable{
             ResultSet rs = stm.executeQuery();
             try{
             if(rs.next()){
-                User user = new User();
                 user.setName(name);
                 user.setPassword(password);
-                return user;
+                return true;
             } else {
-                return null;
+                return false;
                 }
             } finally {
             rs.close();
