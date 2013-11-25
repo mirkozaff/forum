@@ -23,7 +23,7 @@ public class ServletMainPage extends HttpServlet {
         
         String mainPage = "forumHTML/mainPage.html";
         PrintWriter out = response.getWriter();       
-        
+               
         try {
             ServletContext context = getServletContext();
             InputStream inp = context.getResourceAsStream(mainPage);

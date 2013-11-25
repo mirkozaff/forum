@@ -27,16 +27,19 @@ public class ServletCheckLogin extends HttpServlet {
             throws ServletException, IOException, SQLException {
     
         response.setContentType("text/html;charset=UTF-8");     //mi preparo per rispondere
+        
+        
         PrintWriter out = response.getWriter();
         String loginfail = "forumHTML/loginfail.html";
-        String loginsuccess = "forumHTML/mainPage.html";
         
         this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");  //mi connetto al database
          
-        String name = request.getParameter("name");   //prendo i parametri dala richiesta
+        //prendo i parametri dala richiesta
+        String name = request.getParameter("name");   
         String password = request.getParameter("password"); 
         
-        if(manager.authenticate(name, password, user)){ //se l'user esiste nel database e la password è corretta
+        //se l'user esiste nel database e la password è corretta
+        if(manager.authenticate(name, password, user)){
         
             System.out.println("autenticato");
             System.out.println(user.getName());
@@ -44,58 +47,24 @@ public class ServletCheckLogin extends HttpServlet {
 
             // richiesta sessione
             HttpSession session = request.getSession();
-            String sessionID, sessionUser;
-            String sessionFeedback;
-
+            String sessionUser;
+            
             if(session.isNew()){
-                //sessionID = UUID.randomUUID().toString();
-                //session.setAttribute("JSESSIONID", sessionID);
                 session.setAttribute("name", user.getName());
-                
-                sessionFeedback = "Prima connessione";
-                System.out.println(sessionFeedback);
+                System.out.println("Prima connessione");
             }
-            else{
-                
-                 
-                //sessionID = session.getAttribute("JSESSIONID").toString();
+            else{         
                 sessionUser = session.getAttribute("name").toString();
                 System.out.println("sessionID: " + session.getId());
                 System.out.println("sessionUser: " + sessionUser);
-                sessionFeedback = "Gia connesso";  
-                System.out.println(sessionFeedback);
+                System.out.println("Gia connesso");
             }
-            try {
-                ServletContext context = getServletContext();
-                InputStream inp = context.getResourceAsStream(loginsuccess);
-                if (inp != null) {
-                    InputStreamReader isr = new InputStreamReader(inp);
-                    BufferedReader reader = new BufferedReader(isr);
-                    String text = "";
-                    while ((text = reader.readLine()) != null) {
-                        out.println(text);
-                    }
-                }
-            }finally {
-                out.close();
-            }  
+            // rimando alla Main Page
+            response.sendRedirect("/WebForum/ServletMainPage");
         }else{    //se i parametri nn ci sono
-            
             System.out.println("Utente non esistente");
-            try {
-                ServletContext context = getServletContext();
-                InputStream inp = context.getResourceAsStream(loginfail);
-                if (inp != null) {
-                    InputStreamReader isr = new InputStreamReader(inp);
-                    BufferedReader reader = new BufferedReader(isr);
-                    String text = "";
-                    while ((text = reader.readLine()) != null) {
-                        out.println(text);
-                    }
-                }
-            }finally {
-                out.close();
-             }  
+            // rimando alla pagina di Login Fail
+            response.sendRedirect("/WebForum/ServletLoginFail");
         }
     }
 

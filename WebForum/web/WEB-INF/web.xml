@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <servlet>
-        <servlet-name>servlet</servlet-name>
+        <servlet-name>servletCheckLogin</servlet-name>
         <servlet-class>servlet_package.ServletCheckLogin</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>servlet</servlet-name>
-        <url-pattern>/servlet</url-pattern>
+        <servlet-name>servletCheckLogin</servlet-name>
+        <url-pattern>/servletCheckLogin</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>servletLogin</servlet-name>
@@ -17,6 +17,14 @@
         <url-pattern>/servletLogin</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>servletLoginFail</servlet-name>
+        <servlet-class>servlet_package.ServletLoginFail</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>servletLoginFail</servlet-name>
+        <url-pattern>/servletLoginFail</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>servletLogout</servlet-name>
         <servlet-class>servlet_package.ServletLogout</servlet-class>
     </servlet>
@@ -24,9 +32,18 @@
         <servlet-name>servletLogout</servlet-name>
         <url-pattern>/servletLogout</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>servletMainPage</servlet-name>
+        <servlet-class>servlet_package.ServletMainPage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>servletMainPage</servlet-name>
+        <url-pattern>/servletMainPage</url-pattern>
+    </servlet-mapping>
+   
     <session-config>
         <session-timeout>
-            1
+            15
         </session-timeout>
     </session-config>
     <context-param>
