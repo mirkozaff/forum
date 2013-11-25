@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
@@ -39,9 +40,21 @@ public class ServletCheckLogin extends HttpServlet {
         user = manager.authenticate(name, password);   //vedo se i parametri sono corretti
         System.out.println("autenticato");
         
+        // richiesta sessione
         HttpSession session = request.getSession();
-        if (session.isNew()){
-            
+        String sessionID;
+        String sessionFeedback;
+        
+        if(session.isNew()){
+            sessionID = UUID.randomUUID().toString();
+            session.setAttribute("JSESSIONID", sessionID);
+            sessionFeedback = "Prima connessione";
+            System.out.println(sessionFeedback);
+        }
+        else{
+            sessionID = session.getAttribute("JSESSIONID").toString();
+            sessionFeedback = "Gia connesso";  
+            System.out.println(sessionFeedback);
         }
         
         

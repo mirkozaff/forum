@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+
 @WebServlet(name = "ServletMainPage", urlPatterns = {"/ServletMainPage"})
 public class ServletMainPage extends HttpServlet {
     
@@ -21,7 +22,7 @@ public class ServletMainPage extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         String mainPage = "forumHTML/mainPage.html";
-        PrintWriter out = response.getWriter();        
+        PrintWriter out = response.getWriter();       
         
         try {
             ServletContext context = getServletContext();
@@ -33,7 +34,7 @@ public class ServletMainPage extends HttpServlet {
                while ((text = reader.readLine()) != null) {
                    out.println(text);
                }
-           }
+            }
         } finally {
             out.close();
         }
