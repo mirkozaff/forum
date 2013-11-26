@@ -34,6 +34,16 @@ public class ServletDatiUtente extends HttpServlet {
                    out.println(text);
                }
             }
+            out.println("src=\"forumIMG/img.jpg\" alt=\"No image.\" class=\"img-rounded center-block\">"
+                    + "</div>"
+                    + "</div>"
+                    + "<form action=\"servletUpload\" method=POST enctype=\"multipart/form-data\">"
+                    + "<input class=\"btn btn-lg btn-success\" type=\"submit\" value=\"Upload\">"
+                    + "<input class = \"btn btn-lg btn-success\" type=file name=file1>"
+                    + "</form>"
+                    + "</div>"
+                    + "</body>"
+                    + "</html>");
         } finally {
             out.close();
         }

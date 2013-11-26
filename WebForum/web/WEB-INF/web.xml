@@ -59,10 +59,10 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>servletUpload</servlet-name>
-        <servlet-class>servlet_package.servletUpload</servlet-class>
+        <servlet-class>servlet_package.ServletUpload</servlet-class>
         <init-param>
             <param-name>uploadDir</param-name>
-            <param-value>/tmp</param-value>
+            <param-value>C:\\Users\\giovanni\\Documents\\GitHub\\forum\\WebForum\\web\\forumIMG\\</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
