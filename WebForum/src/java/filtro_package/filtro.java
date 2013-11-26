@@ -16,6 +16,9 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -99,18 +102,26 @@ public class filtro implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-    /*    
+     
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        HttpSession session = req.getSession();
+        HttpSession session = req.getSession(false);
+        System.out.println("ho chiamato il filtro");
         
-        String name = req.getAttribute("name").toString();
-        if(name==null){
-            System.out.println("filtro applicato");
+        if(session==null){
+            System.out.println("filtro: mi spiace nn sei autenticato. vai al login.html");
+            req.getRequestDispatcher("servletLogin").forward(req, res);
+            
+        }else{
+            chain.doFilter(request, response);
         }
-        chain.doFilter(request, response); */
         
     }
+    
+
+    /**
+     * Return the filter configuration object for this filter.
+     */
     public FilterConfig getFilterConfig() {
         return (this.filterConfig);
     }
