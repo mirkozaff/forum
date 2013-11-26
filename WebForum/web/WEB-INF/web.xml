@@ -49,6 +49,28 @@
         <servlet-name>servletMainPage</servlet-name>
         <url-pattern>/servletMainPage</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>servletUpload</servlet-name>
+        <servlet-class>servlet_package.servletUpload</servlet-class>        
+        <init-param>
+            <param-name>uploadDir</param-name>
+            <param-value>/tmp</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>servletUpload</servlet-name>
+        <url-pattern>/servletUpload</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>servletDatiUtente</servlet-name>
+        <servlet-class>servlet_package.ServletDatiUtente</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>servletDatiUtente</servlet-name>
+        <url-pattern>/servletDatiUtente</url-pattern>
+    </servlet-mapping>
+    
+    
     <session-config>
         <session-timeout>
             15
