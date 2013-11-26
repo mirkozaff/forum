@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 
@@ -50,5 +51,35 @@ public class DBmanager implements Serializable{
         }finally {
          stm.close();
         }   
+    }
+     public void listagruppi(String name, ArrayList<String> listagruppi,ArrayList<String> listadate) throws SQLException{
+        PreparedStatement stm = con.prepareStatement("SELECT GNAME FROM gruppi WHERE ADMINNAME= ?");
+        PreparedStatement stm2 = con.prepareStatement("SELECT DATA FROM gruppi WHERE ADMINNAME= ?");
+        try{
+            stm.setString(1, name);
+            ResultSet rs = stm.executeQuery();
+            try{
+            while(rs.next()){
+                listagruppi.add(rs.getString(1));
+            }
+            } finally {
+            rs.close();
+            }
+        }finally {
+         stm.close();
+        }
+        try{
+            stm2.setString(1, name);
+            ResultSet rs2 = stm2.executeQuery();
+            try{
+            while(rs2.next()){
+                listadate.add(rs2.getString(1));
+            }
+            } finally {
+            rs2.close();
+            }
+        }finally {
+         stm2.close();
+        } 
     }
 }
