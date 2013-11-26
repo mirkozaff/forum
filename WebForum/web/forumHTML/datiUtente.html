@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dati Utente</title>
+    <title>Dati utente</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrapCSS/bootstrap.css" rel="stylesheet">
@@ -33,7 +33,10 @@
                     <img src="forumIMG/img.jpg" alt="No image." class="img-rounded center-block">
             </div>
         </div>
-        <button class="btn btn-lg btn-success" type="button">Upload</button>
+        <form action="servletUpload" method=POST enctype="multipart/form-data">
+            <input class="btn btn-lg btn-success" type="submit" value="Upload">
+            <input class = "btn btn-lg btn-success" type=file name=file1>
+        </form>
     </div> <!-- /container -->
 
 

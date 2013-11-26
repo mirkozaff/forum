@@ -6,8 +6,8 @@
     </filter>
     <filter-mapping>
         <filter-name>filtro</filter-name>
-        <url-pattern>/ServletMainPage</url-pattern>
         <url-pattern>/servletLogout</url-pattern>
+        <url-pattern>/servletMainPage</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>servletCheckLogin</servlet-name>
@@ -51,7 +51,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>servletUpload</servlet-name>
-        <servlet-class>servlet_package.servletUpload</servlet-class>        
+        <servlet-class>servlet_package.servletUpload</servlet-class>
         <init-param>
             <param-name>uploadDir</param-name>
             <param-value>/tmp</param-value>

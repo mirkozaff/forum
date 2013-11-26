@@ -60,11 +60,11 @@ public class ServletCheckLogin extends HttpServlet {
                 System.out.println("Gia connesso");
             }
             // rimando alla Main Page
-            response.sendRedirect("/WebForum/ServletMainPage");
+            response.sendRedirect("/WebForum/servletMainPage");
         }else{    //se i parametri nn ci sono
             System.out.println("Utente non esistente");
             // rimando alla pagina di Login Fail
-            response.sendRedirect("/WebForum/ServletLoginFail");
+            response.sendRedirect("/WebForum/servletLoginFail");
         }
     }
 
