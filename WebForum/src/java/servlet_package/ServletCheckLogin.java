@@ -2,15 +2,11 @@ package servlet_package;
 
 import db_package.User;
 import db_package.DBmanager;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +16,6 @@ import javax.servlet.http.HttpSession;
 
 public class ServletCheckLogin extends HttpServlet {
 
-    User user = new User();
     DBmanager manager;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -37,20 +32,20 @@ public class ServletCheckLogin extends HttpServlet {
         //prendo i parametri dala richiesta
         String name = request.getParameter("name");   
         String password = request.getParameter("password"); 
-        
+
         //se l'user esiste nel database e la password è corretta
-        if(manager.authenticate(name, password, user)){
+        if(manager.authenticate(name, password)){
         
             System.out.println("autenticato");
-            System.out.println(user.getName());
-            System.out.println(user.getPassword());
+            System.out.println(User.getName());
+            System.out.println(User.getPassword());
 
             // richiesta sessione
             HttpSession session = request.getSession();
             String sessionUser;
             
             if(session.isNew()){
-                session.setAttribute("name", user.getName());
+                session.setAttribute("name", User.getName());
                 System.out.println("Prima connessione");
             }
             else{         

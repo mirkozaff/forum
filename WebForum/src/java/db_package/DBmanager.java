@@ -31,7 +31,7 @@ public class DBmanager implements Serializable{
             Logger.getLogger(DBmanager.class.getName()).info(ex.getMessage());
         }
     }
-    public boolean authenticate(String name, String password, User user) throws SQLException{
+    public boolean authenticate(String name, String password) throws SQLException{
         PreparedStatement stm = con.prepareStatement("SELECT * FROM utenti WHERE name= ? AND password = ?");
         try{
             stm.setString(1, name);
@@ -39,8 +39,8 @@ public class DBmanager implements Serializable{
             ResultSet rs = stm.executeQuery();
             try{
             if(rs.next()){
-                user.setName(name);
-                user.setPassword(password);
+                User.name = name;
+                User.password = password;
                 return true;
             } else {
                 return false;
@@ -81,5 +81,38 @@ public class DBmanager implements Serializable{
         }finally {
          stm2.close();
         } 
+        
+        
+        }
+    public void getImageURL(String name, User user) throws SQLException{
+        PreparedStatement stm = con.prepareStatement("SELECT URL_IMAGE FROM utenti WHERE NAME= ?");
+        try{
+            stm.setString(1, name);
+            ResultSet rs = stm.executeQuery();
+            try{
+                while(rs.next()){
+                    db_package.User.imageURL = (rs.getString(1));
+                }
+            }finally {
+                rs.close();
+            }
+        }finally {
+         stm.close();
+        }    
+    }
+    
+    public void setImageURL(String name, String imgURL) throws SQLException{
+        PreparedStatement stm = con.prepareStatement("UPDATE utenti SET URL_IMAGE= ? WHERE NAME= ?");
+        
+        try{
+            stm.setString(1, imgURL);
+            stm.setString(2, name);
+            db_package.User.imageURL = imgURL;
+            
+            stm.execute();
+            
+        }finally {
+         stm.close();
+        }    
     }
 }

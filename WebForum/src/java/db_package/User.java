@@ -3,22 +3,22 @@ package db_package;
 
 public class User {
     
-    private String name;
-    private String password;
+    public static String name;
+    public static String password;
+    public static String imageURL;
 
-    public String getName() {
+    public User() {
+    }
+
+    public static String getImageURL() {
+        return imageURL;
+    }
+
+    public static String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
+    public static String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

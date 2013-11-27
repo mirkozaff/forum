@@ -11,17 +11,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.oreilly.servlet.MultipartRequest;
+import db_package.DBmanager;
+import db_package.User;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 
 @WebServlet(name = "ServletUpload", urlPatterns = {"/ServletUpload"})
 public class ServletUpload extends HttpServlet {
     
     private String dirName;
+    DBmanager manager;
     
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -35,6 +41,9 @@ public class ServletUpload extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         
+        this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
+        HttpSession session = request.getSession();
+        User.name = session.getAttribute("name").toString();
         String filename = "";
         PrintWriter out = response.getWriter();
         String datiUtente = "forumHTML/datiUtente.html";
@@ -44,9 +53,12 @@ public class ServletUpload extends HttpServlet {
         Enumeration files = multi.getFileNames();
         String name = (String)files.nextElement();
         filename = multi.getFilesystemName(name);
+        manager.setImageURL(User.getName(), "forumIMG/"+filename);
         }
         catch (IOException lEx) {
             this.getServletContext().log(lEx, "error reading or saving file");
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletUpload.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             ServletContext context = getServletContext();
@@ -59,9 +71,8 @@ public class ServletUpload extends HttpServlet {
                    out.println(text);
                }
             }
-            System.out.println("src=\"forumIMG/"+filename+"\"");
-            out.println("src=\"forumIMG/"+filename+"\""
-                    + " alt=\"No image.\" class=\"img-rounded center-block\">"
+
+            out.println("src=\"forumIMG/"+ filename + "\" alt=\"No image.\" class=\"img-rounded center-block\">"
                     + "</div>"
                     + "</div>"
                     + "<form action=\"servletUpload\" method=POST enctype=\"multipart/form-data\">"
