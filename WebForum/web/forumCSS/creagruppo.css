@@ -1,0 +1,23 @@
+body {
+  min-height: 2000px;
+  padding-top: 70px;
+  background-color: #eee;
+}
+
+.badge{
+  color: 428bca;
+  background-color: #b3d0e9;
+}
+
+.navbar-default{
+ background-color: #b3d0e9;
+}
+
+.btnmio{
+ width: 200px;
+}
+.sfondotr {
+  alignment-adjust: central;
+  color: 428bca;
+  background-color: #b3d0e9;
+}

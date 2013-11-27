@@ -17,10 +17,14 @@
         <servlet-name>servletListaGruppi</servlet-name>
         <servlet-class>servlet_package.ServletListaGruppi</servlet-class>
     </servlet>
-       <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>servletListaGruppi</servlet-name>
         <url-pattern>/servletListaGruppi</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>servletEditGruppo</servlet-name>
+        <servlet-class>servlet_package.ServletEditGruppo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletCheckLogin</servlet-name>
         <url-pattern>/servletCheckLogin</url-pattern>
@@ -77,10 +81,10 @@
         <servlet-name>servletDatiUtente</servlet-name>
         <url-pattern>/servletDatiUtente</url-pattern>
     </servlet-mapping>
-    
-    
-    
-    
+    <servlet-mapping>
+        <servlet-name>servletEditGruppo</servlet-name>
+        <url-pattern>/servletEditGruppo</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             15

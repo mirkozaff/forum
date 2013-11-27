@@ -59,7 +59,9 @@ public class ServletUpload extends HttpServlet {
                    out.println(text);
                }
             }
-            out.println("src=\"forumIMG/img.jpg\" alt=\"No image.\" class=\"img-rounded center-block\">"
+            System.out.println("src=\"forumIMG/"+filename+"\"");
+            out.println("src=\"forumIMG/"+filename+"\""
+                    + " alt=\"No image.\" class=\"img-rounded center-block\">"
                     + "</div>"
                     + "</div>"
                     + "<form action=\"servletUpload\" method=POST enctype=\"multipart/form-data\">"
