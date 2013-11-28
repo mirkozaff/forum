@@ -1,5 +1,6 @@
 package servlet_package;
 
+import db_package.User;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,6 +36,37 @@ public class ServletMainPage extends HttpServlet {
                    out.println(text);
                }
             }
+            out.println("<h2> Benvenuto " + User.name + "!</h2>"
+			+ "</div>"
+                        + "</div>"
+			+ "<div class=\"row\">"
+			+ "<div class=\"col-md-6\">"
+			+ "<div class=\"row\">"
+			+ "<div class=\"col-md-6\"><button type=\"button\" class=\"btn btnmio btn-primary navbar-btn\"><big><big>inviti</big></big></button></div>"
+			+ "</div>"
+			+ "<div class=\"row\">"
+			+ "<div class=\"col-md-6\"><a href=\"servletListaGruppi\" class=\"btn btnmio btn-primary navbar-btn\"><big><big>gruppi</big></big></a></div>"
+			+ "</div>"
+			+ "<div class=\"row\">"
+			+ "<div class=\"col-md-6\"> <a href=\"servletEditGruppo\" class=\"btn btnmio btn-primary navbar-btn\"><big><big>crea gruppo</big></big></a></div>"
+			+ "</div>"
+			+ "<div class=\"row\">"
+                        + "<div class=\"col-md-6\"><a href=\"servletDatiUtente\" class=\"btn btnmio btn-primary navbar-btn\"><big><big>Dati utente</big></big></a></div>"
+			+ "</div>"
+			+ "</div>"
+			+ "<div class=\"col-md-6\">"
+			+ "<img src=\"forumIMG/serengetipark4.jpg\" alt=\"cagna\" class=\"img-rounded\">"
+			+ "</div>"
+			+ "</div>"
+		        + "</div>"
+                        + "\n"    
+                        + "<!-- Bootstrap core JavaScript"
+                        + "================================================== -->"
+                        + "<!-- Placed at the end of the document so the pages load faster -->"
+                        + "<script src=\"bootstrapJS/jquery.js\"></script>"
+                        + "<script src=\"bootstrapJS/bootstrap.min.js\"></script>"
+                        + "</body>"
+                        + "</html>");
         } finally {
             out.close();
         }
