@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utility_package.Variabili;
 
 
 @WebServlet(name = "ServletLogin", urlPatterns = {"/ServletLogin"})
@@ -34,7 +35,20 @@ public class ServletLogin extends HttpServlet {
                while ((text = reader.readLine()) != null) {
                    out.println(text);
                }
+               
            }
+           
+           if(Variabili.isLoginFail()){
+               out.println("<div class=\"alert alert-danger\">nome utente o password errati</div>");
+           }
+           
+           out.println( "<input name=\"name\" type=\"text\" class=\"form-control\" placeholder=\"name\" required autofocus>"
+                        + "<input name=\"password\" type=\"password\" class=\"form-control\" placeholder=\"Password\" required>"
+                        + "<button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Login</button>"
+                        + "</form>"
+                        + "</div>"
+                        + "</body>"
+                        + "</html>");
         }finally {
             out.close();
         }

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import utility_package.Variabili;
 
 
 public class ServletCheckLogin extends HttpServlet {
@@ -61,8 +62,9 @@ public class ServletCheckLogin extends HttpServlet {
             response.sendRedirect("/WebForum/servletMainPage");
         }else{    //se i parametri nn ci sono
             System.out.println("Utente non esistente");
+            Variabili.loginFail = true;
             // rimando alla pagina di Login Fail
-            response.sendRedirect("/WebForum/servletLoginFail");
+            response.sendRedirect("/WebForum/servletLogin");
         }
     }
 
