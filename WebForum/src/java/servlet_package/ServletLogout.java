@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import utility_package.Variabili;
 
 
 @WebServlet(name = "ServletLogout", urlPatterns = {"/ServletLogout"})
@@ -20,28 +21,11 @@ public class ServletLogout extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        
-        String filename = "forumHTML/signin.html";
-        
+      
         HttpSession session = request.getSession();
-        session.invalidate();   
-                
-        try {
-           ServletContext context = getServletContext();
-           InputStream inp = context.getResourceAsStream(filename);
-           if (inp != null) {
-               InputStreamReader isr = new InputStreamReader(inp);
-               BufferedReader reader = new BufferedReader(isr);
-               String text = "";
-               while ((text = reader.readLine()) != null) {
-                   out.println(text);
-               }
-           }
-        }finally {
-            out.close();
-        }
+        Variabili.loginFail = false;
+        session.invalidate();
+        response.sendRedirect("/WebForum/servletLogin");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
