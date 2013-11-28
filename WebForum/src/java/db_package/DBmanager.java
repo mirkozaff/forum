@@ -84,14 +84,14 @@ public class DBmanager implements Serializable{
         
         
         }
-    public void getImageURL(String name, User user) throws SQLException{
+    public void getImageURL(String name) throws SQLException{
         PreparedStatement stm = con.prepareStatement("SELECT URL_IMAGE FROM utenti WHERE NAME= ?");
         try{
             stm.setString(1, name);
             ResultSet rs = stm.executeQuery();
             try{
                 while(rs.next()){
-                    db_package.User.imageURL = (rs.getString(1));
+                    User.imageURL = (rs.getString(1));
                 }
             }finally {
                 rs.close();
@@ -107,7 +107,7 @@ public class DBmanager implements Serializable{
         try{
             stm.setString(1, imgURL);
             stm.setString(2, name);
-            db_package.User.imageURL = imgURL;
+            User.imageURL = imgURL;
             
             stm.execute();
             

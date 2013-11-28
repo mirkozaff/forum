@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
+import org.apache.tomcat.jni.Time;
 
 
 @WebServlet(name = "ServletUpload", urlPatterns = {"/ServletUpload"})
@@ -49,41 +50,17 @@ public class ServletUpload extends HttpServlet {
         String datiUtente = "forumHTML/datiUtente.html";
         response.setContentType("text/html;charset=UTF-8"); 
         try{    
-        MultipartRequest multi = new MultipartRequest(request, dirName, 10*1024*1024, "ISO-8859-1", new DefaultFileRenamePolicy());
-        Enumeration files = multi.getFileNames();
-        String name = (String)files.nextElement();
-        filename = multi.getFilesystemName(name);
-        manager.setImageURL(User.getName(), "forumIMG/"+filename);
+            MultipartRequest multi = new MultipartRequest(request, dirName, 10*1024*1024, "ISO-8859-1", new DefaultFileRenamePolicy());
+            Enumeration files = multi.getFileNames();
+            String name = (String)files.nextElement();
+            filename = multi.getFilesystemName(name);
+            manager.setImageURL(User.getName(), "forumIMG/"+filename);
         }
         catch (IOException lEx) {
             this.getServletContext().log(lEx, "error reading or saving file");
         } catch (SQLException ex) {
             Logger.getLogger(ServletUpload.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            ServletContext context = getServletContext();
-            InputStream inp = context.getResourceAsStream(datiUtente);
-            if (inp != null) {
-               InputStreamReader isr = new InputStreamReader(inp);
-               BufferedReader reader = new BufferedReader(isr);
-               String text = "";
-               while ((text = reader.readLine()) != null) {
-                   out.println(text);
-               }
-            }
-
-            out.println("src=\"forumIMG/"+ filename + "\" alt=\"No image.\" class=\"img-rounded center-block\">"
-                    + "</div>"
-                    + "</div>"
-                    + "<form action=\"servletUpload\" method=POST enctype=\"multipart/form-data\">"
-                    + "<input class=\"btn btn-lg btn-success\" type=\"submit\" value=\"Upload\">"
-                    + "<input class = \"btn btn-lg btn-success\" type=file name=file1>"
-                    + "</form>"
-                    + "</div>"
-                    + "</body>"
-                    + "</html>");
-        } finally {
-            out.close();
-        }
+        response.sendRedirect("/WebForum/servletDatiUtente");
     }
 }  

@@ -7,13 +7,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 
 @WebServlet(name = "ServletDatiUtente", urlPatterns = {"/ServletDatiUtente"})
@@ -22,17 +24,15 @@ public class ServletDatiUtente extends HttpServlet {
     DBmanager manager;
             
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         
         String datiUtente = "forumHTML/datiUtente.html";
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
         this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
-        HttpSession session = request.getSession();
-        User.name = session.getAttribute("name").toString();
         //manager.setImageURL(user.getName(), "forumIMG/"+filename, user); 
-        
+        manager.getImageURL(User.name);
         try {
             ServletContext context = getServletContext();
             InputStream inp = context.getResourceAsStream(datiUtente);
@@ -44,7 +44,9 @@ public class ServletDatiUtente extends HttpServlet {
                    out.println(text);
                }
             }
-            out.println("src=\"forumIMG/img.jpg\" alt=\"No image.\" class=\"img-rounded center-block\">"
+            out.println("src=\""
+                    + User.imageURL
+                    + "\" alt=\"No image.\" class=\"img-rounded center-block\">"
                     + "</div>"
                     + "</div>"
                     + "<form action=\"servletUpload\" method=POST enctype=\"multipart/form-data\">"
@@ -71,7 +73,11 @@ public class ServletDatiUtente extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletDatiUtente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -85,7 +91,11 @@ public class ServletDatiUtente extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletDatiUtente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
