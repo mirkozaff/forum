@@ -55,7 +55,7 @@ public class ServletMainPage extends HttpServlet {
 			+ "</div>"
 			+ "</div>"
 			+ "<div class=\"col-md-6\">"
-			+ "<img src=\"forumIMG/serengetipark4.jpg\" alt=\"cagna\" class=\"img-rounded\">"
+			+ "<img src=\"" + User.imageURL +"\" alt=\"cagna\" class=\"img-rounded\">"
 			+ "</div>"
 			+ "</div>"
 		        + "</div>"
