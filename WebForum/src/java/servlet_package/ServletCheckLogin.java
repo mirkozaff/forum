@@ -54,6 +54,9 @@ public class ServletCheckLogin extends HttpServlet {
                 System.out.println("sessionUser: " + sessionUser);
                 System.out.println("Gia connesso");
             }
+            User.password = password;
+            manager.getImageURL(User.name);
+            
             // rimando alla Main Page
             response.sendRedirect("/WebForum/servletMainPage");
         }else{    //se i parametri nn ci sono

@@ -108,10 +108,8 @@ public class DBmanager implements Serializable{
             stm.setString(1, imgURL);
             stm.setString(2, name);
             User.imageURL = imgURL;
-            
             stm.execute();
-            
-        }finally {
+         }finally {
          stm.close();
         }    
     }

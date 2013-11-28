@@ -1,6 +1,5 @@
 package servlet_package;
 
-import db_package.DBmanager;
 import db_package.User;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,8 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ServletDatiUtente", urlPatterns = {"/ServletDatiUtente"})
 public class ServletDatiUtente extends HttpServlet {
 
-    DBmanager manager;
-            
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         
@@ -30,10 +27,7 @@ public class ServletDatiUtente extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
-        this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
-        //manager.setImageURL(user.getName(), "forumIMG/"+filename, user); 
-        manager.getImageURL(User.name);
-        try {
+       try {
             ServletContext context = getServletContext();
             InputStream inp = context.getResourceAsStream(datiUtente);
             if (inp != null) {
@@ -44,9 +38,9 @@ public class ServletDatiUtente extends HttpServlet {
                    out.println(text);
                }
             }
-            out.println("src=\""
+            out.println("<img src=\""
                     + User.imageURL
-                    + "\" alt=\"No image.\" class=\"img-rounded center-block\">"
+                    + "\" alt=\"No image.\" class=\"img-rounded center-block\"> "
                     + "</div>"
                     + "</div>"
                     + "<form action=\"servletUpload\" method=POST enctype=\"multipart/form-data\">"

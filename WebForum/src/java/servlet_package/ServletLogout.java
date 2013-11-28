@@ -1,5 +1,6 @@
 package servlet_package;
 
+import db_package.User;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,8 +26,8 @@ public class ServletLogout extends HttpServlet {
         String filename = "forumHTML/signin.html";
         
         HttpSession session = request.getSession();
-        session.invalidate();     
-        
+        session.invalidate();   
+                
         try {
            ServletContext context = getServletContext();
            InputStream inp = context.getResourceAsStream(filename);
