@@ -42,18 +42,14 @@ public class ServletCheckLogin extends HttpServlet {
 
             // richiesta sessione
             HttpSession session = request.getSession();
-            String sessionUser;
+            session.setAttribute("name", User.getName());
             
-            if(session.isNew()){
-                session.setAttribute("name", User.getName());
-                System.out.println("Prima connessione");
-            }
-            else{         
-                sessionUser = session.getAttribute("name").toString();
-                System.out.println("sessionID: " + session.getId());
-                System.out.println("sessionUser: " + sessionUser);
-                System.out.println("Gia connesso");
-            }
+            System.out.println("Prima connessione");
+            String sessionUser = session.getAttribute("name").toString();
+            System.out.println("sessionID: " + session.getId());
+            System.out.println("sessionUser: " + sessionUser);
+            System.out.println("Gia connesso");
+            
             User.password = password;
             manager.getImageURL(User.name);
             
