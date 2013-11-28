@@ -114,4 +114,29 @@ public class DBmanager implements Serializable{
          stm.close();
         }    
     }
+     public void listanomi(ArrayList<String> listanomi) throws SQLException{
+        PreparedStatement stm = con.prepareStatement("SELECT NAME FROM utenti");
+        try{
+            ResultSet rs = stm.executeQuery();
+            try{
+            while(rs.next()){
+                listanomi.add(rs.getString(1));
+            }
+            } finally {
+            rs.close();
+            }
+        }finally {
+         stm.close();
+        }
+     }    
+     public void aggiornalistagruppi(String gname, String adminname) throws SQLException{
+        PreparedStatement stm = con.prepareStatement("INSERT INTO gruppi(GNAME,ADMINNAME) VALUES (?,?)");
+        try{
+            stm.setString(1, gname);
+            stm.setString(2, adminname);
+            stm.execute();
+        }finally {
+         stm.close();
+        }
+    }
 }

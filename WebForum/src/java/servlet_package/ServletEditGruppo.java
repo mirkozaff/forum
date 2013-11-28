@@ -40,7 +40,11 @@ public class ServletEditGruppo extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-                  
+        
+        ArrayList<String> listanomi = new <String>ArrayList();
+        this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
+        manager.listanomi(listanomi);
+        
         response.setContentType("text/html;charset=UTF-8");       
         String filename = "forumHTML/creagruppo.html";
         PrintWriter out = response.getWriter();
@@ -56,7 +60,16 @@ public class ServletEditGruppo extends HttpServlet {
                    out.println(text);
                }
            }
-            out.println("</table></div><div class=\"col-md-4\"></div></div>"
+           out.println("<form action=\"servletEditGruppoDB\" method=POST>");
+           out.println("<h1>nome gruppo </h1>"
+                   + "<input type=\"text\" name=\"nomegruppo\"/><br>");
+           out.println("<h1>chi vuoi invitare? </h1>");
+           for(int i=0;i<listanomi.size();i++){
+               out.println("<input type=\"checkbox\" name=\"utente\" value=\""+listanomi.get(i)+"\">"+listanomi.get(i)+"<br>");
+           }
+           out.println("<input class=\"btn btn-lg btn-success\" type=\"submit\" value=\"Upload\">"
+                   + "</form>");
+            out.println("</td></tr></table></div><div class=\"col-md-4\"></div></div>"
                         + "<script src=\"bootstrapJS/jquery.js\"></script>"
                         + "<script src=\"bootstrapJS/bootstrap.min.js\"></script>"
                         + "</body>"

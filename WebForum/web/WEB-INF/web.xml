@@ -18,6 +18,10 @@
         <servlet-name>servletListaGruppi</servlet-name>
         <servlet-class>servlet_package.ServletListaGruppi</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletEditGruppoDB</servlet-name>
+        <servlet-class>servlet_package.ServletEditGruppoDB</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletListaGruppi</servlet-name>
         <url-pattern>/servletListaGruppi</url-pattern>
@@ -85,6 +89,10 @@
     <servlet-mapping>
         <servlet-name>servletEditGruppo</servlet-name>
         <url-pattern>/servletEditGruppo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletEditGruppoDB</servlet-name>
+        <url-pattern>/servletEditGruppoDB</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
