@@ -1,5 +1,6 @@
 package db_package;
 
+import utility_package.User;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;

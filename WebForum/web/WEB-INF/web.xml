@@ -6,8 +6,9 @@
     </filter>
     <filter-mapping>
         <filter-name>filtro</filter-name>
-        <url-pattern>/servletLogout</url-pattern>
+        
         <url-pattern>/servletMainPage</url-pattern>
+        <url-pattern>/servletLogin</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>servletCheckLogin</servlet-name>

@@ -1,4 +1,4 @@
-package db_package;
+package utility_package;
 
 
 public class User {

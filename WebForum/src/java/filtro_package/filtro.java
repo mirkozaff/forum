@@ -108,11 +108,15 @@ public class filtro implements Filter {
         HttpSession session = req.getSession(false);
         System.out.println("ho chiamato il filtro");
         
-        if(session==null){
+        if(session==null && !req.getRequestURI().equals("/WebForum/servletLogin")){
             System.out.println("filtro: mi spiace nn sei autenticato. vai al login.html");
-            req.getRequestDispatcher("servletLogin").forward(req, res);
+            res.sendRedirect("/WebForum/servletLogin");
             
-        }else{
+        }
+        if(session != null && req.getRequestURI().equals("/WebForum/servletLogin")){
+            res.sendRedirect("/WebForum/servletMainPage");
+        }
+        else{
             chain.doFilter(request, response);
         }
         

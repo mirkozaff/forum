@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.oreilly.servlet.MultipartRequest;
 import db_package.DBmanager;
-import db_package.User;
+import utility_package.User;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

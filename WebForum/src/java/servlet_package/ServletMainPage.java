@@ -1,6 +1,6 @@
 package servlet_package;
 
-import db_package.User;
+import utility_package.User;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
