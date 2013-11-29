@@ -9,9 +9,11 @@ import java.io.PrintWriter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 
@@ -22,6 +24,31 @@ public class ServletMainPage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        HttpSession session = request.getSession();        
+        String lastTime = Long.toString(session.getLastAccessedTime());
+        System.out.println("Orario Session: "+ session.getCreationTime());
+        
+        //richiesta cookie
+        Cookie[] cookies = request.getCookies();
+        Cookie tmp,
+               lastAccessedTime = new Cookie("ultimoAccesso","");
+        
+        //controllo che il cookie cercato sia già presente
+        for(int i = 0 ; i < cookies.length; i++) {
+            tmp = cookies[i];
+            if(tmp.getName().equals("ultimoAccesso")){
+                lastAccessedTime = tmp;                
+            }
+        }
+        
+        //setto l'orara dell'ultimo accesso
+        if(lastAccessedTime.getValue().equals("")){
+            
+            lastAccessedTime.setValue(lastTime);
+            lastAccessedTime.setMaxAge(-1);
+            response.addCookie(lastAccessedTime);
+        }
+                
         String mainPage = "forumHTML/mainPage.html";
         PrintWriter out = response.getWriter();       
                
@@ -36,7 +63,18 @@ public class ServletMainPage extends HttpServlet {
                    out.println(text);
                }
             }
-            out.println("<h2> Benvenuto " + User.name + "!</h2>"
+            out.println("sei entrato l'ultima volta alle: " + lastAccessedTime.getValue()
+                        + "<a href=\"servletLogout\"> <button type=\"submit\" class=\"btn btn-primary navbar-btn\">Logout</button> </a>"
+                        + "&nbsp;"
+                        + "</div>"
+		        +"</nav>"
+                        + "<br><br>"
+                        + "<div class=\"container\">"
+			+ "<div class=\"row\">"
+                        + "<div class=\"col-md-6\">" 
+			+ "</div>"
+			+ "<div class=\"col-md-6\">"
+                        + "<h2> Benvenuto " + User.name + "!</h2>"
 			+ "</div>"
                         + "</div>"
 			+ "<div class=\"row\">"
