@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.sql.Date;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 
 
@@ -24,15 +24,11 @@ public class ServletMainPage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        HttpSession session = request.getSession();        
-        String lastTime = Long.toString(session.getLastAccessedTime());
-        System.out.println("Orario Session: "+ session.getCreationTime());
-        
-        //richiesta cookie
+        //richiesta cookie        
         Cookie[] cookies = request.getCookies();
-        Cookie tmp,
-               lastAccessedTime = new Cookie("ultimoAccesso","");
-        
+        Cookie tmp, 
+               lastAccessedTime = new Cookie("ultimoAccesso", "(nessun ultimo accesso salvato)");
+               
         //controllo che il cookie cercato sia già presente
         for(int i = 0 ; i < cookies.length; i++) {
             tmp = cookies[i];
@@ -41,14 +37,12 @@ public class ServletMainPage extends HttpServlet {
             }
         }
         
-        //setto l'orara dell'ultimo accesso
-        if(lastAccessedTime.getValue().equals("")){
-            
-            lastAccessedTime.setValue(lastTime);
-            lastAccessedTime.setMaxAge(-1);
-            response.addCookie(lastAccessedTime);
-        }
-                
+        //setto la stringa di ultimo accesso, se non ci sono accessi salvati lo dico
+        String time = "(nessuna accesso salvato)";
+        try{
+            time = new Date(Long.parseLong(lastAccessedTime.getValue())).toLocaleString();
+        }catch(Exception e){}
+             
         String mainPage = "forumHTML/mainPage.html";
         PrintWriter out = response.getWriter();       
                
@@ -63,7 +57,7 @@ public class ServletMainPage extends HttpServlet {
                    out.println(text);
                }
             }
-            out.println("sei entrato l'ultima volta alle: " + lastAccessedTime.getValue()
+            out.println("Ultimo accesso: " + time
                         + "<a href=\"servletLogout\"> <button type=\"submit\" class=\"btn btn-primary navbar-btn\">Logout</button> </a>"
                         + "&nbsp;"
                         + "</div>"

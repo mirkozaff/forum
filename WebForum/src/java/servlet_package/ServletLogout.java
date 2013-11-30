@@ -15,10 +15,16 @@ public class ServletLogout extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      
+        
+              
+        //cancello sessione
         HttpSession session = request.getSession();
-        Variabili.loginFail = false;
         session.invalidate();
+        
+        //ripristino variabile login fail
+        Variabili.loginFail = false;
+        
+        //reindirizzo al Login
         response.sendRedirect("/WebForum/servletLogin");
     }
 

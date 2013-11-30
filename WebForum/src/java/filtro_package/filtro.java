@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package filtro_package;
 
 import java.io.IOException;
@@ -20,10 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author giovanni
- */
+
 public class filtro implements Filter {
     
     private static final boolean debug = true;
@@ -114,7 +105,7 @@ public class filtro implements Filter {
             
         }
         if(session != null && req.getRequestURI().equals("/WebForum/servletLogin")){
-            res.sendRedirect("/WebForum/servletMainPage");
+            res.sendRedirect("/WebForum/servletCheckLogin");
         }
         else{
             chain.doFilter(request, response);
