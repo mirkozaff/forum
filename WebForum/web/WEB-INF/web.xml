@@ -6,7 +6,6 @@
     </filter>
     <filter-mapping>
         <filter-name>filtro</filter-name>
-        
         <url-pattern>/servletMainPage</url-pattern>
         <url-pattern>/servletLogin</url-pattern>
     </filter-mapping>
@@ -21,6 +20,14 @@
     <servlet>
         <servlet-name>servletEditGruppoDB</servlet-name>
         <servlet-class>servlet_package.ServletEditGruppoDB</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletVisualizzaPost</servlet-name>
+        <servlet-class>servlet_package.ServletVisualizzaPost</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ervletCaricaPostDB</servlet-name>
+        <servlet-class>servlet_package.ServletCaricaPostDB</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>servletListaGruppi</servlet-name>
@@ -71,7 +78,7 @@
         <servlet-class>servlet_package.ServletUpload</servlet-class>
         <init-param>
             <param-name>uploadDir</param-name>
-            <param-value>C:\\Users\\Mirko\\Documents\\GitHub\\forum\\WebForum\\web\\forumIMG\\</param-value>
+            <param-value>C:\\Users\\Giovanni\\Documents\\GitHub\\forum\\WebForum\\web\\forumIMG\\</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
@@ -93,6 +100,14 @@
     <servlet-mapping>
         <servlet-name>servletEditGruppoDB</servlet-name>
         <url-pattern>/servletEditGruppoDB</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletVisualizzaPost</servlet-name>
+        <url-pattern>/servletVisualizzaPost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ervletCaricaPostDB</servlet-name>
+        <url-pattern>/servletCaricaPostDB</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

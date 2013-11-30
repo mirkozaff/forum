@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.logging.Logger;
+import utility_package.Post;
 
 
 public class DBmanager implements Serializable{
@@ -53,15 +54,17 @@ public class DBmanager implements Serializable{
          stm.close();
         }   
     }
-     public void listagruppi(String name, ArrayList<String> listagruppi,ArrayList<String> listadate) throws SQLException{
-        PreparedStatement stm = con.prepareStatement("SELECT GNAME FROM gruppi WHERE ADMINNAME= ?");
-        PreparedStatement stm2 = con.prepareStatement("SELECT DATA FROM gruppi WHERE ADMINNAME= ?");
+     public void listagruppi(String name, ArrayList<String> listagruppi, ArrayList<String> listaadmin ) throws SQLException{
+         
+         // trovo i gruppi a cui l'utente è iscritto o di cui è amministratore
+        PreparedStatement stm = con.prepareStatement("SELECT DISTINCT GNAME,GADMIN FROM gruppi where UTENTE=?");
         try{
             stm.setString(1, name);
             ResultSet rs = stm.executeQuery();
             try{
             while(rs.next()){
                 listagruppi.add(rs.getString(1));
+                listaadmin.add(rs.getString(2));
             }
             } finally {
             rs.close();
@@ -69,22 +72,7 @@ public class DBmanager implements Serializable{
         }finally {
          stm.close();
         }
-        try{
-            stm2.setString(1, name);
-            ResultSet rs2 = stm2.executeQuery();
-            try{
-            while(rs2.next()){
-                listadate.add(rs2.getString(1));
-            }
-            } finally {
-            rs2.close();
-            }
-        }finally {
-         stm2.close();
-        } 
-        
-        
-        }
+   }
     public void getImageURL(String name) throws SQLException{
         PreparedStatement stm = con.prepareStatement("SELECT URL_IMAGE FROM utenti WHERE NAME= ?");
         try{
@@ -129,14 +117,59 @@ public class DBmanager implements Serializable{
          stm.close();
         }
      }    
-     public void aggiornalistagruppi(String gname, String adminname) throws SQLException{
-        PreparedStatement stm = con.prepareStatement("INSERT INTO gruppi(GNAME,ADMINNAME) VALUES (?,?)");
+     public void aggiornalistagruppi(String gname, String adminname, String[] utentiNuovoGruppo) throws SQLException{  
+         
+         //cerco se esiste già un record nella tabella "gruppi" in cui il nome del gruppo e l'admin sono uguali a quelli che voglio creare
+        PreparedStatement stm = con.prepareStatement("SELECT DISTINCT GNAME,GADMIN FROM gruppi where GNAME=? AND GADMIN=?"); 
+        PreparedStatement stm2 = con.prepareStatement("INSERT INTO gruppi(GNAME,UTENTE,GADMIN) VALUES (?,?,?)");
         try{
             stm.setString(1, gname);
             stm.setString(2, adminname);
-            stm.execute();
+            ResultSet rs = stm.executeQuery();
+            
+            // se il gruppo che voglio creare è nuovo(ossia la coppia gname e gadmin che voglio creare non è gia presente) lo creo
+            if(rs.next()==false){
+                
+                //aggiorno il db con il record riguardante l'admin (gname, admin, admin)
+                stm2.setString(1, gname);
+                stm2.setString(2, adminname);
+                stm2.setString(3, adminname);
+                stm2.execute();                
+                
+                //aggiorno il db con il record riguardante gli invitati (gname, admin, admin)
+                for(int i=0; i<utentiNuovoGruppo.length;i++){
+                stm2.setString(1, gname);
+                stm2.setString(2, utentiNuovoGruppo[i]);
+                stm2.setString(3, adminname);
+                stm2.execute();
+                }
+            }else{
+                System.out.println(" gruppo e admin gia esistenti");
+            }
+        }finally {
+         stm.close();
+         stm2.close();
+        }
+    }
+     public void getpost(String gname, String gadmin, ArrayList<Post> listapost) throws SQLException{
+        PreparedStatement stm = con.prepareStatement("SELECT POST,UTENTE_POSTANTE,DATA FROM post WHERE GNAME=? AND GADMIN=?");
+        try{
+            stm.setString(1, gname);
+            stm.setString(2, gadmin);
+            ResultSet rs = stm.executeQuery();
+            try{
+               while(rs.next()){
+                String testo = rs.getString("POST");
+                String utente_postante = rs.getString("UTENTE_POSTANTE");
+                String data = rs.getString("DATA");
+                Post post = new Post(testo,utente_postante,gname,gadmin,data);   
+                listapost.add(post);
+               }
+            } finally {
+            rs.close();
+            }
         }finally {
          stm.close();
         }
-    }
+     }
 }

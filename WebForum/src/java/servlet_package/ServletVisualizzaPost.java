@@ -21,42 +21,34 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utility_package.Post;
 
 /**
  *
  * @author giovanni
  */
-public class ServletListaGruppi extends HttpServlet {
+public class ServletVisualizzaPost extends HttpServlet {
     private DBmanager manager;
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
+         
+        //ricavo il nome e l'autore del gruppo a cui vuole accedere l'utente
+        String gname =request.getParameter("gname");
+        String gadmin=request.getParameter("gadmin");
         
-        response.setContentType("text/html;charset=UTF-8");
+        ArrayList<Post> listapost = new ArrayList<Post>();
+       
+        this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
+        manager.getpost(gname, gadmin, listapost);
         
-        String filename = "forumHTML/listagruppi.html";
-        String name;
-        ArrayList<String> listagruppi = new <String>ArrayList();
-        ArrayList<String> listaadmin = new <String>ArrayList();
+        
+        
+        response.setContentType("text/html;charset=UTF-8"); 
+        String filename = "forumHTML/visualizzaPost.html";
         PrintWriter out = response.getWriter();
         
-        this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
-        name = (String)request.getSession(false).getAttribute("name");
-        
-        if(name!=null){
-        manager.listagruppi(name, listagruppi, listaadmin);
-        }
-        
-       try {
+        try {
            ServletContext context = getServletContext();
            InputStream inp = context.getResourceAsStream(filename);
            if (inp != null) {
@@ -67,22 +59,8 @@ public class ServletListaGruppi extends HttpServlet {
                    out.println(text);
                }
            }
-            for(int i=0;i<listagruppi.size();i++){
-            out.println("<tr><td>"+listagruppi.get(i)+"</td>"
-                    + "<td>"+listaadmin.get(i) +"</td>"
-                    + "<td><form action=\"servletVisualizzaPost\" method=POST>"
-                    + "<input type=\"submit\" value=\"Vai al Gruppo\">"
-                    + "<input type=\"hidden\" name=\"gname\" value=\""+listagruppi.get(i)+"\">"
-                    + "<input type=\"hidden\" name=\"gadmin\" value=\""+listaadmin.get(i)+"\">"
-                    + "</form></td>"
-                    + "</tr>");}
-            out.println("</table></div><div class=\"col-md-4\"></div></div>"
-                        + "<script src=\"bootstrapJS/jquery.js\"></script>"
-                        + "<script src=\"bootstrapJS/bootstrap.min.js\"></script>"
-                        + "</body>"
-                        + "</html>");
-
-        } finally {
+               
+           } finally {
             out.close();
         }
     }
@@ -102,7 +80,7 @@ public class ServletListaGruppi extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ServletListaGruppi.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServletVisualizzaPost.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -120,7 +98,7 @@ public class ServletListaGruppi extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ServletListaGruppi.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServletVisualizzaPost.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
