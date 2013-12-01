@@ -1,5 +1,6 @@
 package servlet_package;
 
+import db_package.DBmanager;
 import utility_package.User;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,6 +8,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,9 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "ServletMainPage", urlPatterns = {"/ServletMainPage"})
 public class ServletMainPage extends HttpServlet {
+    private DBmanager manager;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         
         //richiesta cookie        
@@ -42,7 +48,15 @@ public class ServletMainPage extends HttpServlet {
         try{
             time = new Date(Long.parseLong(lastAccessedTime.getValue())).toLocaleString();
         }catch(Exception e){}
-             
+        
+        //richiamo il dbmanager
+        this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
+        
+        ArrayList<String> listagname = new <String>ArrayList();
+        ArrayList<String> listagadmin = new <String>ArrayList();
+        //chiedo se ci sono inviti per l'utente
+        manager.getinviti(User.getName(),listagname, listagadmin);
+        
         String mainPage = "forumHTML/mainPage.html";
         PrintWriter out = response.getWriter();       
                
@@ -61,35 +75,52 @@ public class ServletMainPage extends HttpServlet {
                         + "<a href=\"servletLogout\"> <button type=\"submit\" class=\"btn btn-primary navbar-btn\">Logout</button> </a>"
                         + "&nbsp;"
                         + "</div>"
-		        +"</nav>"
+		        + "</nav>"
                         + "<br><br>"
                         + "<div class=\"container\">"
 			+ "<div class=\"row\">"
-                        + "<div class=\"col-md-6\">" 
+                        + "<div class=\"col-lg-4\">"         
 			+ "</div>"
-			+ "<div class=\"col-md-6\">"
+                        + "<div class=\"col-lg-4\">"
+                        + "<h2> lista inviti </h2>"         
+			+ "</div>"                    
+			+ "<div class=\"col-lg-4\">"
                         + "<h2> Benvenuto " + User.name + "!</h2>"
 			+ "</div>"
                         + "</div>"
 			+ "<div class=\"row\">"
-			+ "<div class=\"col-md-6\">"
+			+ "<div class=\"col-lg-4\">"
 			+ "<div class=\"row\">"
-			+ "<div class=\"col-md-6\"><button type=\"button\" class=\"btn btnmio btn-primary navbar-btn\"><big><big>inviti</big></big></button></div>"
-			+ "</div>"
-			+ "<div class=\"row\">"
-			+ "<div class=\"col-md-6\"><a href=\"servletListaGruppi\" class=\"btn btnmio btn-primary navbar-btn\"><big><big>gruppi</big></big></a></div>"
+			+ "<div><a href=\"servletListaGruppi\" class=\"btn btnmio btn-primary navbar-btn\"><big><big>gruppi</big></big></a></div>"
 			+ "</div>"
 			+ "<div class=\"row\">"
-			+ "<div class=\"col-md-6\"> <a href=\"servletEditGruppo\" class=\"btn btnmio btn-primary navbar-btn\"><big><big>crea gruppo</big></big></a></div>"
+			+ "<div> <a href=\"servletEditGruppo\" class=\"btn btnmio btn-primary navbar-btn\"><big><big>crea gruppo</big></big></a></div>"
 			+ "</div>"
 			+ "<div class=\"row\">"
-                        + "<div class=\"col-md-6\"><a href=\"servletDatiUtente\" class=\"btn btnmio btn-primary navbar-btn\"><big><big>Dati utente</big></big></a></div>"
+                        + "<div><a href=\"servletDatiUtente\" class=\"btn btnmio btn-primary navbar-btn\"><big><big>Dati utente</big></big></a></div>"
 			+ "</div>"
 			+ "</div>"
-			+ "<div class=\"col-md-6\">"
-			+ "<img src=\"" + User.imageURL +"\" alt=\"cagna\" class=\"img-rounded\">"
-			+ "</div>"
-			+ "</div>"
+                        + "<div class=\"col-lg-4\">"
+                        + "<table class=\"table\">");
+            for(int i=0;i<listagname.size();i++){
+            out.println("<tr>"
+                    + "<td>"
+                    + "<form action=\"servletRisposteInviti\" method=POST>"
+                    +listagname.get(i)+" di "+listagadmin.get(i)+" "
+                    + "<button type=\"submit\" class=\"btn btn-danger\" name=\"bottone\" value=\"rifiuta\">Rifiuta</button>"
+                    + "<button type=\"submit\" class=\"btn btn-success\" name=\"bottone\" value=\"accetta\">accetta</button>"
+                    + "<input type=\"hidden\" name=\"gname\" value=\""+listagname.get(i)+"\">"
+                    + "<input type=\"hidden\" name=\"gadmin\" value=\""+listagadmin.get(i)+"\">"              
+                    + "</form>"
+                    + "</td>"
+                    + "</tr>");
+            }
+            out.println("</table>"
+                        + "</div>"                     
+			+ "<div class=\"col-lg-4\">"
+			+ "<img src=\"" + User.imageURL +"\" alt=\"cagna\" class=\"img-rounded\" style=\"width: 300px\">"
+			+ "</div>"                    
+			+ "</div>"                    
 		        + "</div>"
                         + "\n"    
                         + "<!-- Bootstrap core JavaScript"
@@ -116,7 +147,11 @@ public class ServletMainPage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletMainPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -130,7 +165,11 @@ public class ServletMainPage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletMainPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

@@ -59,6 +59,41 @@ public class ServletVisualizzaPost extends HttpServlet {
                    out.println(text);
                }
            }
+           out.println("<input type=\"hidden\" name=\"gname\" value=\""+gname+"\">");
+           out.println("<input type=\"hidden\" name=\"gadmin\" value=\""+gadmin+"\">");
+           out.println("</form></div></div></div></div></div><div class=\"navbar-default divcentrato\">");
+           out.println("<p align=\"center\" style=\"font-size: 250%\">"+gname+"</p>");
+           for(int i=0; i<listapost.size();i++){
+           out.println("<div class=\"container\">"
+                   + "<div class=\"row\">"
+                   + "<div class=\"col-md-2\">"
+                   + "<div class=\"row\">"
+                   + "<div>"
+                   + "<h2>"+listapost.get(i).getUtente_postante()
+                   +"</h2>"
+                   + "</div>"
+                   + "</div>"
+                   + "<div class=\"row\">"
+                   + "<div>"
+                   + "<img src=\"forumIMG/serengetipark4.jpg\" alt=\"cagna\" class=\"img-rounded\" style=\"width: 100px\">"
+                   + "</div>"
+                   + "</div>"
+                   + "<div class=\"row\">"
+                   + "<div>"+listapost.get(i).getData()+"</div>"
+                   + "</div>"
+                   + "</div>"
+                   + "<div style=\"margin-top: 20px\">"
+                   + "<textarea name=\"post\" cols=\"150\" rows=\"6\" maxlength=\"10000\" style=\"resize: none\" readonly>"+listapost.get(i).getTesto()+"</textarea>"
+                   + "</div>"
+                   + "</div>"
+                   + "</div>");    
+           }
+           out.println("</div><script src=\"bootstrapJS/modal.js\"></script>\n"
+                   + "<script src=\"bootstrapJS/jquery.js\"></script>\n"
+                   + "<script src=\"bootstrapJS/bootstrap.min.js\"></script>\n"
+                   + "</body>\n"
+                   + "</html>");
+           
                
            } finally {
             out.close();

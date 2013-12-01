@@ -40,7 +40,7 @@ public class ServletDatiUtente extends HttpServlet {
             }
             out.println("<img src=\""
                     + User.imageURL
-                    + "\" alt=\"No image.\" class=\"img-rounded center-block\"> "
+                    + "\" alt=\"No image.\" class=\"img-rounded center-block\" style=\"width: 400px\"> "
                     + "</div>"
                     + "</div>"
                     + "<form action=\"servletUpload\" method=POST enctype=\"multipart/form-data\">"

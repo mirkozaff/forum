@@ -57,7 +57,7 @@ public class DBmanager implements Serializable{
      public void listagruppi(String name, ArrayList<String> listagruppi, ArrayList<String> listaadmin ) throws SQLException{
          
          // trovo i gruppi a cui l'utente è iscritto o di cui è amministratore
-        PreparedStatement stm = con.prepareStatement("SELECT DISTINCT GNAME,GADMIN FROM gruppi where UTENTE=?");
+        PreparedStatement stm = con.prepareStatement("SELECT DISTINCT GNAME,GADMIN FROM gruppi where UTENTE=? AND INVITATO=false");
         try{
             stm.setString(1, name);
             ResultSet rs = stm.executeQuery();
@@ -89,7 +89,6 @@ public class DBmanager implements Serializable{
          stm.close();
         }    
     }
-    
     public void setImageURL(String name, String imgURL) throws SQLException{
         PreparedStatement stm = con.prepareStatement("UPDATE utenti SET URL_IMAGE= ? WHERE NAME= ?");
         
@@ -121,7 +120,7 @@ public class DBmanager implements Serializable{
          
          //cerco se esiste già un record nella tabella "gruppi" in cui il nome del gruppo e l'admin sono uguali a quelli che voglio creare
         PreparedStatement stm = con.prepareStatement("SELECT DISTINCT GNAME,GADMIN FROM gruppi where GNAME=? AND GADMIN=?"); 
-        PreparedStatement stm2 = con.prepareStatement("INSERT INTO gruppi(GNAME,UTENTE,GADMIN) VALUES (?,?,?)");
+        PreparedStatement stm2 = con.prepareStatement("INSERT INTO gruppi(GNAME,UTENTE,GADMIN,INVITATO) VALUES (?,?,?,?)");
         try{
             stm.setString(1, gname);
             stm.setString(2, adminname);
@@ -134,6 +133,7 @@ public class DBmanager implements Serializable{
                 stm2.setString(1, gname);
                 stm2.setString(2, adminname);
                 stm2.setString(3, adminname);
+                stm2.setBoolean(4, false);
                 stm2.execute();                
                 
                 //aggiorno il db con il record riguardante gli invitati (gname, admin, admin)
@@ -141,6 +141,7 @@ public class DBmanager implements Serializable{
                 stm2.setString(1, gname);
                 stm2.setString(2, utentiNuovoGruppo[i]);
                 stm2.setString(3, adminname);
+                stm2.setBoolean(4, true);
                 stm2.execute();
                 }
             }else{
@@ -171,5 +172,70 @@ public class DBmanager implements Serializable{
         }finally {
          stm.close();
         }
+     }
+     public void getinviti(String name, ArrayList<String> listagname, ArrayList<String> listagadmin) throws SQLException{
+        PreparedStatement stm = con.prepareStatement("SELECT GNAME,GADMIN FROM gruppi WHERE UTENTE=? AND INVITATO=true");
+        try{
+            stm.setString(1, name);
+            ResultSet rs = stm.executeQuery();
+            try{
+               while(rs.next()){
+                String gname = rs.getString("GNAME");
+                String gadmin = rs.getString("GADMIN");  
+                listagname.add(gname);
+                listagadmin.add(gadmin);
+               }
+            } finally {
+            rs.close();
+            }
+        }finally {
+         stm.close();
+        }
+     }
+     public void aggiornapost(String post, String utente_postante,String gname,String gadmin,String data) throws SQLException{
+         
+         //creo un record nella tabella post con il nuovo post creato
+         PreparedStatement stm = con.prepareStatement("INSERT INTO post(POST,UTENTE_POSTANTE,GNAME,GADMIN,DATA) VALUES (?,?,?,?,?)");
+         try{
+             stm.setString(1, post);
+             stm.setString(2, utente_postante);
+             stm.setString(3, gname);
+             stm.setString(4, gadmin);
+             stm.setString(5, data);
+             stm.execute();
+             System.out.println("post aggiornato");
+         }finally{
+             stm.close();
+         }
+     }
+     public void aggiornarecordinviti(String gname, String utente,String gadmin, String bottone) throws SQLException{
+         
+         
+         System.out.println("sono nell'aggiornainviti");
+         //creo un record nella tabella post con il nuovo post creato
+         PreparedStatement stm = con.prepareStatement("UPDATE gruppi SET INVITATO=false WHERE GNAME=? AND UTENTE=? AND GADMIN=?");
+         PreparedStatement stm2 = con.prepareStatement("DELETE FROM gruppi WHERE GNAME=? AND UTENTE=? AND GADMIN=?");
+         if(bottone.toString().equals("accetta")){
+         try{
+             stm.setString(1, gname);
+             stm.setString(2, utente);
+             stm.setString(3, gadmin);
+             stm.execute();
+             System.out.println("record aggiornato con invitato=false");
+         }finally{
+             stm.close();
+         }
+         }
+         if(bottone.toString().equals("rifiuta")){
+          try{
+             stm2.setString(1, gname);
+             stm2.setString(2, utente);
+             stm2.setString(3, gadmin);
+             stm2.execute();
+             System.out.println("record cancellato");
+         }finally{
+             stm2.close();
+         }   
+         }
      }
 }

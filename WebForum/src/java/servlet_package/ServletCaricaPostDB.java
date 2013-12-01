@@ -8,21 +8,38 @@ package servlet_package;
 
 import db_package.DBmanager;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utility_package.User;
 
 //questa servlet viene invocata quando l'utente scrive un nuovo post. si occupa di aggiornare il db e richiamare la servletVisualizzaPost
 public class ServletCaricaPostDB extends HttpServlet {
     private DBmanager manager;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
         
-        String name;
+        String gname=request.getParameter("gname");
+        String gadmin=request.getParameter("gadmin");
+        String post=request.getParameter("post");
+        String filepost=request.getParameter("filepost");
+        String data = new Date().toString();
+        System.out.println(" "+gname+" "+gadmin+" "+post+" "+filepost+" "+data);
         
+        manager.aggiornapost(post, User.getName(), gname, gadmin, data);
+        
+        request.setAttribute("gname", gname);
+        request.setAttribute("gadmin", gadmin);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/servletVisualizzaPost");
+        dispatcher.forward(request, response);
 
     }
 
@@ -38,7 +55,11 @@ public class ServletCaricaPostDB extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletCaricaPostDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -52,7 +73,11 @@ public class ServletCaricaPostDB extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletCaricaPostDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

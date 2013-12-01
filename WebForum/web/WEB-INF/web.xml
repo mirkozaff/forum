@@ -29,6 +29,10 @@
         <servlet-name>ervletCaricaPostDB</servlet-name>
         <servlet-class>servlet_package.ServletCaricaPostDB</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletRisposteInviti</servlet-name>
+        <servlet-class>servlet_package.ServletRisposteInviti</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>servletListaGruppi</servlet-name>
         <url-pattern>/servletListaGruppi</url-pattern>
@@ -108,6 +112,10 @@
     <servlet-mapping>
         <servlet-name>ervletCaricaPostDB</servlet-name>
         <url-pattern>/servletCaricaPostDB</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletRisposteInviti</servlet-name>
+        <url-pattern>/servletRisposteInviti</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

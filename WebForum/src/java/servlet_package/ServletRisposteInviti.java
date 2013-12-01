@@ -12,33 +12,27 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utility_package.User;
 
-//questa servlet aggiorna il database in base al gruppo che l'utente vuole creare
-public class ServletEditGruppoDB extends HttpServlet {
-DBmanager manager;
+//questa servlet serve per aggiornare il database in base alle scelte che l'utente fa riguardo agli inviti
+public class ServletRisposteInviti extends HttpServlet {
+    private DBmanager manager;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         
-        this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");  //mi connetto al database
+        String bottone=request.getParameter("bottone");
+        String gname=request.getParameter("gname");
+        String gadmin=request.getParameter("gadmin");
         
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();        
-        String nomegruppo = request.getParameter("nomegruppo");
-        String[] utentiNuovoGruppo = request.getParameterValues("utente");
+        this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
+        manager.aggiornarecordinviti(gname, User.getName(), gadmin, bottone);
         
-        //provo a creare il gruppo richiesto
-        manager.aggiornalistagruppi(nomegruppo,User.getName(), utentiNuovoGruppo);
-
-       
-        RequestDispatcher rd = request.getRequestDispatcher("servletListaGruppi");
-        rd.forward(request, response);
+        response.sendRedirect("servletMainPage");
         
     }
 
@@ -54,11 +48,11 @@ DBmanager manager;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    try {
-        processRequest(request, response);
-    } catch (SQLException ex) {
-        Logger.getLogger(ServletEditGruppoDB.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletRisposteInviti.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -72,11 +66,11 @@ DBmanager manager;
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    try {
-        processRequest(request, response);
-    } catch (SQLException ex) {
-        Logger.getLogger(ServletEditGruppoDB.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletRisposteInviti.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
