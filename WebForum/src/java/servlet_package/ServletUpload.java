@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.oreilly.servlet.MultipartRequest;
 import db_package.DBmanager;
+import java.io.File;
 import utility_package.User;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -35,10 +36,14 @@ public class ServletUpload extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         
+        File f = new File(dirName + User.getName() + "\\");
+        f.mkdirs();
+        
+        
         this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
         String filename = "";
         try{    
-            MultipartRequest multi = new MultipartRequest(request, dirName, 10*1024*1024, "ISO-8859-1", new DefaultFileRenamePolicy());
+            MultipartRequest multi = new MultipartRequest(request, f.getAbsolutePath(), 10*1024*1024, "ISO-8859-1", new DefaultFileRenamePolicy());
             Enumeration files = multi.getFileNames();
             String name = (String)files.nextElement();
             filename = multi.getFilesystemName(name);
