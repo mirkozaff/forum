@@ -256,6 +256,7 @@ public class DBmanager implements Serializable{
          }
      }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
      public void modificagruppo(String gname, String newgname, String gadmin, String[] utentiNuovoGruppo) throws SQLException{
          
@@ -288,6 +289,8 @@ public class DBmanager implements Serializable{
             stm2.close();
          }
      }
+=======
+>>>>>>> 4a3f063926eb33c5ec96ee3f86c293322bb674ef
 =======
 >>>>>>> 4a3f063926eb33c5ec96ee3f86c293322bb674ef
      
