@@ -7,4 +7,6 @@ public class Variabili {
     public static boolean isLoginFail() {
         return loginFail;
     }
+    
+    public static final String FILENAME = "C:\\Users\\Mirko\\Desktop\\hello.pdf";
 }

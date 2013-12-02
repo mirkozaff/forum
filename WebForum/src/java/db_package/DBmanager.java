@@ -255,6 +255,7 @@ public class DBmanager implements Serializable{
          }   
          }
      }
+<<<<<<< HEAD
      public void modificagruppo(String gname, String newgname, String gadmin, String[] utentiNuovoGruppo) throws SQLException{
          
          //faccio l'update del nome del gruppo
@@ -285,5 +286,69 @@ public class DBmanager implements Serializable{
          }finally {
             stm2.close();
          }
+=======
+     
+     public ArrayList<String> utentiPartecipantiPDF(String gname, String gadmin)throws SQLException{
+        
+        ArrayList <String> utentiPartecipanti = new ArrayList <String>();
+        PreparedStatement stm = con.prepareStatement("SELECT * FROM gruppi WHERE gname= ? AND gadmin = ?");
+        try{
+            stm.setString(1, gname);
+            stm.setString(2, gadmin);
+            ResultSet rs = stm.executeQuery();
+            try{
+                while(rs.next()){
+                    utentiPartecipanti.add(rs.getString("UTENTE"));
+                }
+            } finally {
+            rs.close();
+            }
+        }finally {
+         stm.close();
+        } 
+        return utentiPartecipanti;
+     }
+     
+     public int numeroPostPDF(String gname, String gadmin)throws SQLException{
+        
+        int numPost = 0;
+        PreparedStatement stm = con.prepareStatement("SELECT * FROM post WHERE gname= ? AND gadmin = ?");
+        try{
+            stm.setString(1, gname);
+            stm.setString(2, gadmin);
+            ResultSet rs = stm.executeQuery();
+            try{
+                while(rs.next()){
+                    numPost++;
+                }
+            } finally {
+            rs.close();
+            }
+        }finally {
+         stm.close();
+        } 
+        return numPost;
+     }
+     
+     public String ultimaDataPDF(String gname, String gadmin)throws SQLException{
+        
+        String ultimaData = "";
+        PreparedStatement stm = con.prepareStatement("SELECT TOP 1 data FROM post ORDER BY data DESC WHERE gname= ? AND gadmin = ?");
+        try{
+            stm.setString(1, gname);
+            stm.setString(2, gadmin);
+            ResultSet rs = stm.executeQuery();
+            try{
+                while(rs.next()){
+                    ultimaData = rs.getString("DATA");
+                }
+            } finally {
+            rs.close();
+            }
+        }finally {
+         stm.close();
+        } 
+        return ultimaData;
+>>>>>>> 4a3f063926eb33c5ec96ee3f86c293322bb674ef
      }
 }
