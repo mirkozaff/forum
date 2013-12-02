@@ -16,3 +16,7 @@ body {
 .btnmio{
  width: 200px;
 }
+
+.btn-right{
+    text-align:right;
+}

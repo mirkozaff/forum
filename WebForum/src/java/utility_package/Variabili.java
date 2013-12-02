@@ -8,5 +8,5 @@ public class Variabili {
         return loginFail;
     }
     
-    public static final String FILENAME = "C:\\Users\\Mirko\\Desktop\\hello.pdf";
+    public static final String FILENAME = "C:\\Users\\Giovanni\\Desktop\\";
 }

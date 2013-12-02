@@ -272,6 +272,7 @@ public class DBmanager implements Serializable{
          }finally{
              stm.close();
          }
+       if(utentiNuovoGruppo!=null){
          try
          {
                 //aggiorno il db con il record riguardante gli invitati (gname, admin, admin)
@@ -286,6 +287,7 @@ public class DBmanager implements Serializable{
          }finally {
             stm2.close();
          }
+       }
      }
      
      public ArrayList<String> utentiPartecipantiPDF(String gname, String gadmin)throws SQLException{
@@ -333,7 +335,7 @@ public class DBmanager implements Serializable{
      public String ultimaDataPDF(String gname, String gadmin)throws SQLException{
         
         String ultimaData = "";
-        PreparedStatement stm = con.prepareStatement("SELECT TOP 1 data FROM post ORDER BY data DESC WHERE gname= ? AND gadmin = ?");
+        PreparedStatement stm = con.prepareStatement("SELECT data FROM post WHERE gname= ? AND gadmin = ?");
         try{
             stm.setString(1, gname);
             stm.setString(2, gadmin);

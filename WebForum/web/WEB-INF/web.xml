@@ -14,6 +14,10 @@
         <servlet-class>servlet_package.ServletCheckLogin</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>servletPDF</servlet-name>
+        <servlet-class>servlet_package.ServletPDF</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>servletListaGruppi</servlet-name>
         <servlet-class>servlet_package.ServletListaGruppi</servlet-class>
     </servlet>
@@ -68,6 +72,10 @@
     <servlet-mapping>
         <servlet-name>servletLogout</servlet-name>
         <url-pattern>/servletLogout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletPDF</servlet-name>
+        <url-pattern>/servletPDF</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>servletMainPage</servlet-name>

@@ -80,8 +80,10 @@ public class ServletEditGruppo extends HttpServlet {
                    + "<input type=\"text\" name=\"nomegruppo\"");
            //se nella chiamata ho passato il parametro gname lo metto nel placeholder
            if(modifica){
-           out.println("placeholder=\""+gname+"\">");
-           out.println("<input type=\"hidden\" name=\"gname\" value=\""+gname+"\">");
+           out.println("value=\""+gname+"\">");
+           out.println("<input type=\"hidden\" name=\"gname\" value=\""+gname+"\"> ");
+           }else{
+           out.println(">");
            }
            out.println("<h1>chi vuoi invitare? </h1><br>");
            

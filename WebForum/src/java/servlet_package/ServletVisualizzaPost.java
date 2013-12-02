@@ -14,8 +14,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +35,7 @@ public class ServletVisualizzaPost extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-         
+        
         //ricavo il nome e l'autore del gruppo a cui vuole accedere l'utente
         String gname =request.getParameter("gname");
         String gadmin=request.getParameter("gadmin");
@@ -68,7 +70,7 @@ public class ServletVisualizzaPost extends HttpServlet {
                    + "<button type=\"submit\" class=\"btn btn-success navbar-btn\">edita gruppo</button>&nbsp;"
                    + "<input type=\"hidden\" name=\"gname\" value=\""+gname+"\">"
                    + "<input type=\"hidden\" name=\"gadmin\" value=\""+gadmin+"\">"
-                   + "<button type=\"button\" class=\"btn btn-success navbar-btn\">pdf del gruppo</button>"
+                   + "<button type=\"submin\" class=\"btn btn-success navbar-btn\" formaction=\"servletPDF\">pdf del gruppo</button>"
                    + "</form>"
                    + "</div>");
            }
@@ -95,7 +97,7 @@ public class ServletVisualizzaPost extends HttpServlet {
                    + "</div>"
                    + "</div>"
                    + "<div style=\"margin-top: 20px\">"
-                   + "<textarea name=\"post\" cols=\"150\" rows=\"6\" maxlength=\"10000\" style=\"resize: none\" readonly>"+listapost.get(i).getTesto()+"</textarea>"
+                   + "<div class=\"box\">"+modifica(listapost.get(i).getTesto())+"</div>"
                    + "</div>"
                    + "</div>"
                    + "</div>");    
@@ -111,6 +113,31 @@ public class ServletVisualizzaPost extends HttpServlet {
             out.close();
         }
     }
+    
+    public String modifica(String testo){
+        Scanner s = new Scanner(testo);
+        String testoFinale ="";
+        String nomeLink = "";
+        String modifing;
+        while(s.hasNext())
+        {
+            modifing=s.next();
+            char [] caratteri = new char[modifing.length()];
+            for (int i=0; i<caratteri.length; i++) {
+            caratteri[i] = modifing.charAt(i);}
+            
+            if(caratteri[0]=='$' && caratteri[1]=='$' && caratteri[caratteri.length-1]=='$' && caratteri[caratteri.length-2]=='$'){
+                String tmp;
+                for(int y = 2; y<caratteri.length-2; y++){ 
+                tmp = Character.toString(caratteri[y]);    
+                nomeLink = nomeLink+tmp;       //questo è il nome del link
+                modifing = "<a href=\""+nomeLink+"\" target=\"_blank\">"+nomeLink+"</a>"; 
+                }  
+            }
+            testoFinale = testoFinale+" "+modifing;
+       
+        }return testoFinale;
+    }    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

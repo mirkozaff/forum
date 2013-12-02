@@ -102,18 +102,24 @@ public class ServletMainPage extends HttpServlet {
 			+ "</div>"
                         + "<div class=\"col-lg-4\">"
                         + "<table class=\"table\">");
+            if(listagname.size()!=0){
             for(int i=0;i<listagname.size();i++){
             out.println("<tr>"
                     + "<td>"
-                    + "<form action=\"servletRisposteInviti\" method=POST>"
-                    +listagname.get(i)+" di "+listagadmin.get(i)+" "
-                    + "<button type=\"submit\" class=\"btn btn-danger\" name=\"bottone\" value=\"rifiuta\">Rifiuta</button>"
-                    + "<button type=\"submit\" class=\"btn btn-success\" name=\"bottone\" value=\"accetta\">accetta</button>"
+                    + listagname.get(i)+" di "+listagadmin.get(i)
+                    + "</td>"
+                    + "<td>"
+                    + "<form action=\"servletRisposteInviti\" method=POST><div>"                  
+                    + "<button type=\"submit\" class=\"btn btn-danger\" name=\"bottone\" value=\"rifiuta\">Rifiuta</button>&nbsp;"
+                    + "<button type=\"submit\" class=\"btn btn-success\" name=\"bottone\" value=\"accetta\">accetta</button></div>"
                     + "<input type=\"hidden\" name=\"gname\" value=\""+listagname.get(i)+"\">"
                     + "<input type=\"hidden\" name=\"gadmin\" value=\""+listagadmin.get(i)+"\">"              
                     + "</form>"
                     + "</td>"
                     + "</tr>");
+            }
+            }else{
+            out.println("<p>non hai inviti</p>");
             }
             out.println("</table>"
                         + "</div>"                     

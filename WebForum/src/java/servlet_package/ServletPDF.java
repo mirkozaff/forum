@@ -7,6 +7,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import db_package.DBmanager;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,16 +27,18 @@ public class ServletPDF extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, DocumentException, SQLException {
-        response.setContentType("text/html;charset=UTF-8");
         
         this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
         
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        
         String gname = request.getParameter("gname");
-        String gadmin = request.getParameter("gname");
+        String gadmin = request.getParameter("gadmin");
         Report rep = new Report(gname, gadmin, manager.utentiPartecipantiPDF(gname, gadmin).toString(), manager.ultimaDataPDF(gname, gadmin), manager.numeroPostPDF(gname, gadmin));
         
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(Variabili.FILENAME));
+        PdfWriter.getInstance(document, new FileOutputStream(Variabili.FILENAME + gname + ".pdf"));
         document.open();
         Paragraph inizio = new Paragraph("Report gruppo \"" + rep.getGname() + "\" di \"" + rep.getGadmin() + "\"\n");
         Paragraph utentiPartecipanti = new Paragraph("Utenti Partecipanti: " + rep.getUtentiPartecipanti() + "\n");
@@ -46,8 +49,33 @@ public class ServletPDF extends HttpServlet {
         document.add(dataUltimoPost);
         document.add(numeroPost);        
         document.close();
+        
+        out.println("<!DOCTYPE html>"
+                + "<html lang=\"en\">"
+                + "<head>"
+                + "<meta charset=\"utf-8\">"
+                + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">"
+                + "<title>pdf</title>"
+                + "<link href=\"bootstrapCSS/bootstrap.css\" rel=\"stylesheet\">"
+                + "<link href=\"forumCSS/pdfcreato.css\" rel=\"stylesheet\">"
+                + "</head>"
+                + "<body>"
+                + "<div id=\"wrap\">"
+                + "<div class=\"container\">"
+                + "<div class=\"page-header\">"
+                + "<h1>Il PDF del gruppo è stato creato!</h1>"
+                + "</div>"
+                + "<p class=\"lead\">puoi trovare il documento pdf sul tuo desktop</p>"
+                + "<form action=\"servletVisualizzaPost\" method=POST>"
+                + "<button type=\"submit\" class=\"btn btn-primary\">torna al gruppo</button>"
+                + "<input type=\"hidden\" name=\"gname\" value=\""+gname+"\">"
+                + "<input type=\"hidden\" name=\"gadmin\" value=\""+gadmin+"\">"
+                + "</form>"
+                + "</div>"
+                + "</div>"
+                + "</body>"
+                + "</html>");
     }
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

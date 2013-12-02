@@ -10,3 +10,13 @@
     border-radius: 20px;
 }
 
+.box {
+width: auto;
+height: 125px;
+margin: 0 auto;
+overflow: auto;
+border: 1px solid #428bca;
+padding: 2px;
+text-align: justify;
+background: #fff;
+}
