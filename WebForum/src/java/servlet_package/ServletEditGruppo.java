@@ -21,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utility_package.User;
 
 // questa servlet invia l'html che mostra il form per creare un gruppo
 public class ServletEditGruppo extends HttpServlet {
@@ -29,9 +30,35 @@ public class ServletEditGruppo extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         
+        String gname =request.getParameter("gname");
+        String gadmin=request.getParameter("gadmin");
+        Boolean modifica = false;
+        
+        if(gname!=null && gadmin!=null){
+            modifica = true;
+        }
+        
         ArrayList<String> listanomi = new <String>ArrayList();
+        ArrayList<String> listaiscritti = new <String>ArrayList();
+        ArrayList<String> listavisualizzata = new <String>ArrayList();
         this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
-        manager.listanomi(listanomi);
+        
+        manager.listanomi(listanomi); 
+        manager.listaiscritti(gname, gadmin, listaiscritti);
+        
+        if(listanomi.contains(User.getName())){
+            listanomi.remove(User.getName());
+        }
+        for (String s : listanomi){
+            System.out.println(s);
+        }
+        
+        for (String s : listanomi) {  
+            if(!listaiscritti.contains(s)){
+                listavisualizzata.add(s);
+            }
+        }
+        
         
         response.setContentType("text/html;charset=UTF-8");       
         String filename = "forumHTML/creagruppo.html";
@@ -50,13 +77,28 @@ public class ServletEditGruppo extends HttpServlet {
            }
            out.println("<form action=\"servletEditGruppoDB\" method=POST>");
            out.println("<h1>nome gruppo </h1>"
-                   + "<input type=\"text\" name=\"nomegruppo\"/><br>");
-           out.println("<h1>chi vuoi invitare? </h1>");
-           for(int i=0;i<listanomi.size();i++){
-               out.println("<input type=\"checkbox\" name=\"utente\" value=\""+listanomi.get(i)+"\">"+listanomi.get(i)+"<br>");
+                   + "<input type=\"text\" name=\"nomegruppo\"");
+           //se nella chiamata ho passato il parametro gname lo metto nel placeholder
+           if(modifica){
+           out.println("placeholder=\""+gname+"\">");
+           out.println("<input type=\"hidden\" name=\"gname\" value=\""+gname+"\">");
            }
-           out.println("<input class=\"btn btn-lg btn-success\" type=\"submit\" value=\"Upload\">"
+           out.println("<h1>chi vuoi invitare? </h1><br>");
+           
+           //visualizzo le checkbox con gli utenti invitabili
+           if(!listavisualizzata.isEmpty()){
+           for(int i=0;i<listavisualizzata.size();i++){
+               out.println("<input type=\"checkbox\" name=\"utente\" value=\""+listavisualizzata.get(i)+"\">"+listavisualizzata.get(i)+"<br>");
+           }
+           }else{out.println("<p>non ci sono utenti da invitare</p>");}
+           
+           if(modifica){
+           out.println("<input class=\"btn btn-lg btn-success\" type=\"submit\" name=\"bottone\" value=\"modifica\">"
                    + "</form>");
+           }else{
+           out.println("<input class=\"btn btn-lg btn-success\" type=\"submit\" name=\"bottone\" value=\"crea\">"
+                   + "</form>");    
+           }
             out.println("</td></tr></table></div><div class=\"col-md-4\"></div></div>"
                         + "<script src=\"bootstrapJS/jquery.js\"></script>"
                         + "<script src=\"bootstrapJS/bootstrap.min.js\"></script>"

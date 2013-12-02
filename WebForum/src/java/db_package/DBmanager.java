@@ -115,7 +115,24 @@ public class DBmanager implements Serializable{
         }finally {
          stm.close();
         }
-     }    
+     }
+      public void listaiscritti(String gname, String gadmin, ArrayList<String> listanomi) throws SQLException{
+        PreparedStatement stm = con.prepareStatement("SELECT DISTINCT UTENTE FROM gruppi WHERE GNAME=? AND GADMIN=?");
+        try{
+            stm.setString(1, gname);
+            stm.setString(2, gadmin);
+            ResultSet rs = stm.executeQuery();
+            try{
+            while(rs.next()){
+                listanomi.add(rs.getString(1));
+            }
+            } finally {
+            rs.close();
+            }
+        }finally {
+         stm.close();
+        }
+     }
      public void aggiornalistagruppi(String gname, String adminname, String[] utentiNuovoGruppo) throws SQLException{  
          
          //cerco se esiste già un record nella tabella "gruppi" in cui il nome del gruppo e l'admin sono uguali a quelli che voglio creare
@@ -236,6 +253,37 @@ public class DBmanager implements Serializable{
          }finally{
              stm2.close();
          }   
+         }
+     }
+     public void modificagruppo(String gname, String newgname, String gadmin, String[] utentiNuovoGruppo) throws SQLException{
+         
+         //faccio l'update del nome del gruppo
+         PreparedStatement stm = con.prepareStatement("UPDATE gruppi SET GNAME=? WHERE GNAME=? AND GADMIN=?");
+         //aggiungo i nuovi utenti invitati
+         PreparedStatement stm2 = con.prepareStatement("INSERT INTO gruppi(GNAME,UTENTE,GADMIN,INVITATO) VALUES (?,?,?,?)");
+         
+         try{
+             stm.setString(1, newgname);
+             stm.setString(2, gname);
+             stm.setString(3, gadmin);
+             stm.execute();
+             System.out.println("nomegruppo aggiornato");
+         }finally{
+             stm.close();
+         }
+         try
+         {
+                //aggiorno il db con il record riguardante gli invitati (gname, admin, admin)
+                for(int i=0; i<utentiNuovoGruppo.length;i++){
+                stm2.setString(1, newgname);
+                stm2.setString(2, utentiNuovoGruppo[i]);
+                stm2.setString(3, gadmin);
+                stm2.setBoolean(4, true);
+                stm2.execute();
+                System.out.println("aggiunti i nuovi tizi invitati");
+                }
+         }finally {
+            stm2.close();
          }
      }
 }

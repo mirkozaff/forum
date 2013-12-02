@@ -33,10 +33,18 @@ DBmanager manager;
         String nomegruppo = request.getParameter("nomegruppo");
         String[] utentiNuovoGruppo = request.getParameterValues("utente");
         
+        String bottone =request.getParameter("bottone");
+        String gname = request.getParameter("gname");
+
+        if(bottone.toString().equals("crea")){
         //provo a creare il gruppo richiesto
         manager.aggiornalistagruppi(nomegruppo,User.getName(), utentiNuovoGruppo);
+        }else if(bottone.toString().equals("modifica") && gname.toString()!=null){
+        manager.modificagruppo(gname, nomegruppo, User.getName(), utentiNuovoGruppo);
+        }
+        
+        
 
-       
         RequestDispatcher rd = request.getRequestDispatcher("servletListaGruppi");
         rd.forward(request, response);
         

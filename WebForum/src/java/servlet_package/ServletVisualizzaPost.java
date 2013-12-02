@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utility_package.Post;
+import utility_package.User;
 
 /**
  *
@@ -42,10 +43,8 @@ public class ServletVisualizzaPost extends HttpServlet {
         this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
         manager.getpost(gname, gadmin, listapost);
         
-        
-        
-        response.setContentType("text/html;charset=UTF-8"); 
-        String filename = "forumHTML/visualizzaPost.html";
+        response.setContentType("text/html;charset=UTF-8");
+        String filename="forumHTML/visualizzaPost.html";
         PrintWriter out = response.getWriter();
         
         try {
@@ -63,6 +62,19 @@ public class ServletVisualizzaPost extends HttpServlet {
            out.println("<input type=\"hidden\" name=\"gadmin\" value=\""+gadmin+"\">");
            out.println("</form></div></div></div></div></div><div class=\"navbar-default divcentrato\">");
            out.println("<p align=\"center\" style=\"font-size: 250%\">"+gname+"</p>");
+           if(gadmin.toString().equals(User.getName())){
+           out.println("<div style=\"text-align: center\">"
+                   + "<form action=\"servletEditGruppo\" method=POST>"
+                   + "<button type=\"submit\" class=\"btn btn-success navbar-btn\">edita gruppo</button>&nbsp;"
+                   + "<input type=\"hidden\" name=\"gname\" value=\""+gname+"\">"
+                   + "<input type=\"hidden\" name=\"gadmin\" value=\""+gadmin+"\">"
+                   + "<button type=\"button\" class=\"btn btn-success navbar-btn\">pdf del gruppo</button>"
+                   + "</form>"
+                   + "</div>");
+           }
+           if(listapost.isEmpty()){
+               out.println("<p align=\"center\">non ci sono post in questo gruppo</p>");
+           }
            for(int i=0; i<listapost.size();i++){
            out.println("<div class=\"container\">"
                    + "<div class=\"row\">"
