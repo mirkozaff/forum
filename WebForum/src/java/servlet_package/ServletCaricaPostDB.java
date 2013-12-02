@@ -31,6 +31,7 @@ public class ServletCaricaPostDB extends HttpServlet {
         String gadmin=request.getParameter("gadmin");
         String post=request.getParameter("post");
         String filepost=request.getParameter("filepost");
+        String bottone=request.getParameter("bottone");
         String data = new Date().toString();
         System.out.println(" "+gname+" "+gadmin+" "+post+" "+filepost+" "+data);
         
@@ -38,7 +39,9 @@ public class ServletCaricaPostDB extends HttpServlet {
         
         request.setAttribute("gname", gname);
         request.setAttribute("gadmin", gadmin);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/servletVisualizzaPost");
+        request.setAttribute("filepost", filepost);
+        request.setAttribute("bottone", bottone);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/servletUpload");
         dispatcher.forward(request, response);
 
     }
