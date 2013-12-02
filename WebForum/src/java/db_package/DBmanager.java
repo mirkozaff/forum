@@ -255,7 +255,7 @@ public class DBmanager implements Serializable{
          }   
          }
      }
-<<<<<<< HEAD
+
      public void modificagruppo(String gname, String newgname, String gadmin, String[] utentiNuovoGruppo) throws SQLException{
          
          //faccio l'update del nome del gruppo
@@ -286,7 +286,7 @@ public class DBmanager implements Serializable{
          }finally {
             stm2.close();
          }
-=======
+     }
      
      public ArrayList<String> utentiPartecipantiPDF(String gname, String gadmin)throws SQLException{
         
@@ -349,6 +349,5 @@ public class DBmanager implements Serializable{
          stm.close();
         } 
         return ultimaData;
->>>>>>> 4a3f063926eb33c5ec96ee3f86c293322bb674ef
      }
 }
