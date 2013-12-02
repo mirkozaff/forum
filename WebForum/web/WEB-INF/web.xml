@@ -90,7 +90,7 @@
         <servlet-class>servlet_package.ServletUpload</servlet-class>
         <init-param>
             <param-name>uploadDir</param-name>
-            <param-value>C:\\Users\\Giovanni\\Documents\\GitHub\\forum\\WebForum\\web\\forumIMG\\</param-value>
+            <param-value>/WebForum/</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
@@ -124,6 +124,14 @@
     <servlet-mapping>
         <servlet-name>servletRisposteInviti</servlet-name>
         <url-pattern>/servletRisposteInviti</url-pattern>
+    </servlet-mapping>
+        <servlet>
+    <servlet-name>servletFileServe</servlet-name>
+        <servlet-class>servlet_package.ServletFileServe</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    <servlet-name>servletFileServe</servlet-name>
+        <url-pattern>/file/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
