@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package servlet_package;
 
 import db_package.DBmanager;
@@ -26,10 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import utility_package.Post;
 import utility_package.User;
 
-/**
- *
- * @author giovanni
- */
 public class ServletVisualizzaPost extends HttpServlet {
     private DBmanager manager;
 
