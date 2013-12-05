@@ -36,7 +36,8 @@ public class ServletUpload extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         
-        File f = new File(dirName + User.getName() + "\\");
+        String path = dirName + "profileIMG/" + User.getName();
+        File f = new File(path);
         f.mkdirs();
         
         
@@ -47,7 +48,7 @@ public class ServletUpload extends HttpServlet {
             Enumeration files = multi.getFileNames();
             String name = (String)files.nextElement();
             filename = multi.getFilesystemName(name);
-            manager.setImageURL(User.getName(), "forumIMG/"+filename);
+            manager.setImageURL(User.getName(), filename);
         }
         catch (IOException lEx) {
             this.getServletContext().log(lEx, "error reading or saving file");

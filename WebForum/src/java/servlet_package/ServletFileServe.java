@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utility_package.User;
 
 
 public class ServletFileServe extends HttpServlet {
@@ -29,7 +30,7 @@ public class ServletFileServe extends HttpServlet {
     public void init() throws ServletException {
 
         // Define base path somehow. You can define it as init-param of the servlet.
-        this.filePath = "/WebForum/profileIMG";
+        this.filePath = "/WebForum/profileIMG/" + User.getName();
 
         // In a Windows environment with the Applicationserver running on the
         // c: volume, the above path is exactly the same as "c:\files".
