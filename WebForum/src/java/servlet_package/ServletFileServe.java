@@ -19,8 +19,8 @@ import utility_package.Variabili;
 public class ServletFileServe extends HttpServlet {
 
     private String filePath;
-    String gname;
-    String gadmin;
+    private String gname;
+    private String gadmin;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {   
@@ -30,15 +30,14 @@ public class ServletFileServe extends HttpServlet {
         
         //setta il path
         if(request.getParameter(Variabili.OP).equals(Variabili.PROFILE_IMG)){
-            filePath = "/WebForum/profileIMG/" + User.getName();
+            filePath = Variabili.PATH_PROFILE_IMG + User.getName();
         }
         else if(request.getParameter(Variabili.OP).equals(Variabili.PDF)){
-            filePath = Variabili.FILEPATH + gname + "_" + gadmin;
-            System.out.println("path: " + filePath);
+            filePath = Variabili.PATH_GROUPS + gname + "_" + gadmin;
         }
         else{
-            System.out.println("immagine profilo");
-            filePath = "/WebForum/proeeeefileIMG/" + User.getName();
+            // error 404
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
         // prende il fiel richiesto dalle path info
         String requestedFile = request.getPathInfo();

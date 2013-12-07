@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    
     <filter>
         <filter-name>filtro</filter-name>
         <filter-class>filtro_package.filtro</filter-class>
@@ -9,46 +10,79 @@
         <url-pattern>/servletMainPage</url-pattern>
         <url-pattern>/servletLogin</url-pattern>
     </filter-mapping>
+    
     <servlet>
         <servlet-name>servletCheckLogin</servlet-name>
         <servlet-class>servlet_package.ServletCheckLogin</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>servletPDF</servlet-name>
-        <servlet-class>servlet_package.ServletPDF</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>servletListaGruppi</servlet-name>
-        <servlet-class>servlet_package.ServletListaGruppi</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>servletEditGruppoDB</servlet-name>
-        <servlet-class>servlet_package.ServletEditGruppoDB</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>servletVisualizzaPost</servlet-name>
-        <servlet-class>servlet_package.ServletVisualizzaPost</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ervletCaricaPostDB</servlet-name>
-        <servlet-class>servlet_package.ServletCaricaPostDB</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>servletRisposteInviti</servlet-name>
-        <servlet-class>servlet_package.ServletRisposteInviti</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>servletListaGruppi</servlet-name>
-        <url-pattern>/servletListaGruppi</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>servletEditGruppo</servlet-name>
-        <servlet-class>servlet_package.ServletEditGruppo</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>servletCheckLogin</servlet-name>
         <url-pattern>/servletCheckLogin</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>servletPDF</servlet-name>
+        <servlet-class>servlet_package.ServletPDF</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>servletPDF</servlet-name>
+        <url-pattern>/servletPDF</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>servletListaGruppi</servlet-name>
+        <servlet-class>servlet_package.ServletListaGruppi</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>servletListaGruppi</servlet-name>
+        <url-pattern>/servletListaGruppi</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>servletEditGruppoDB</servlet-name>
+        <servlet-class>servlet_package.ServletEditGruppoDB</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>servletEditGruppoDB</servlet-name>
+        <url-pattern>/servletEditGruppoDB</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>servletVisualizzaPost</servlet-name>
+        <servlet-class>servlet_package.ServletVisualizzaPost</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>servletVisualizzaPost</servlet-name>
+        <url-pattern>/servletVisualizzaPost</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ervletCaricaPostDB</servlet-name>
+        <servlet-class>servlet_package.ServletCaricaPostDB</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ervletCaricaPostDB</servlet-name>
+        <url-pattern>/servletCaricaPostDB</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>servletRisposteInviti</servlet-name>
+        <servlet-class>servlet_package.ServletRisposteInviti</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>servletRisposteInviti</servlet-name>
+        <url-pattern>/servletRisposteInviti</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>servletEditGruppo</servlet-name>
+        <servlet-class>servlet_package.ServletEditGruppo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>servletEditGruppo</servlet-name>
+        <url-pattern>/servletEditGruppo</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>servletLogin</servlet-name>
         <servlet-class>servlet_package.ServletLogin</servlet-class>
@@ -57,6 +91,7 @@
         <servlet-name>servletLogin</servlet-name>
         <url-pattern>/servletLogin</url-pattern>
     </servlet-mapping>
+    
     <servlet>
         <servlet-name>servletLoginFail</servlet-name>
         <servlet-class>servlet_package.ServletLoginFail</servlet-class>
@@ -65,6 +100,7 @@
         <servlet-name>servletLoginFail</servlet-name>
         <url-pattern>/servletLoginFail</url-pattern>
     </servlet-mapping>
+    
     <servlet>
         <servlet-name>servletLogout</servlet-name>
         <servlet-class>servlet_package.ServletLogout</servlet-class>
@@ -73,10 +109,7 @@
         <servlet-name>servletLogout</servlet-name>
         <url-pattern>/servletLogout</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>servletPDF</servlet-name>
-        <url-pattern>/servletPDF</url-pattern>
-    </servlet-mapping>
+    
     <servlet>
         <servlet-name>servletMainPage</servlet-name>
         <servlet-class>servlet_package.ServletMainPage</servlet-class>
@@ -85,18 +118,16 @@
         <servlet-name>servletMainPage</servlet-name>
         <url-pattern>/servletMainPage</url-pattern>
     </servlet-mapping>
+   
     <servlet>
         <servlet-name>servletUpload</servlet-name>
         <servlet-class>servlet_package.ServletUpload</servlet-class>
-        <init-param>
-            <param-name>uploadDir</param-name>
-            <param-value>/WebForum/</param-value>
-        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>servletUpload</servlet-name>
         <url-pattern>/servletUpload</url-pattern>
     </servlet-mapping>
+    
     <servlet>
         <servlet-name>servletDatiUtente</servlet-name>
         <servlet-class>servlet_package.ServletDatiUtente</servlet-class>
@@ -105,41 +136,23 @@
         <servlet-name>servletDatiUtente</servlet-name>
         <url-pattern>/servletDatiUtente</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>servletEditGruppo</servlet-name>
-        <url-pattern>/servletEditGruppo</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>servletEditGruppoDB</servlet-name>
-        <url-pattern>/servletEditGruppoDB</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>servletVisualizzaPost</servlet-name>
-        <url-pattern>/servletVisualizzaPost</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ervletCaricaPostDB</servlet-name>
-        <url-pattern>/servletCaricaPostDB</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>servletRisposteInviti</servlet-name>
-        <url-pattern>/servletRisposteInviti</url-pattern>
-    </servlet-mapping>
-        <servlet>
-    <servlet-name>servletFileServe</servlet-name>
+  
+    <servlet>
+        <servlet-name>servletFileServe</servlet-name>
         <servlet-class>servlet_package.ServletFileServe</servlet-class>
     </servlet>
     <servlet-mapping>
-    <servlet-name>servletFileServe</servlet-name>
+        <servlet-name>servletFileServe</servlet-name>
         <url-pattern>/file/*</url-pattern>
     </servlet-mapping>
+    
     <session-config>
-        <session-timeout>
-            15
-        </session-timeout>
+        <session-timeout> 15 </session-timeout>
     </session-config>
+    
     <context-param>
         <param-name>dburl</param-name>
         <param-value>"jdbc:derby://localhost:1527/DBforum"</param-value>
     </context-param>
+    
 </web-app>

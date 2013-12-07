@@ -16,28 +16,37 @@ import utility_package.User;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import utility_package.Variabili;
 
 
 @WebServlet(name = "ServletUpload", urlPatterns = {"/ServletUpload"})
 public class ServletUpload extends HttpServlet {
     
-    private String dirName;
+    private String filePath;
+    private String gname;
+    private String gadmin;
+    private String redirect;
     DBmanager manager;
-    
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        // legge la uploadDir dai parametri della servlet
-        dirName = config.getInitParameter("uploadDir");
-        if (dirName == null) {
-            throw new ServletException("Please supply uploadDir parameter");
-        }
-    }
     
     public void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         
-        String path = dirName + "profileIMG/" + User.getName();
-        File f = new File(path);
+        
+        //setta il path
+        if(request.getParameter(Variabili.OP).equals(Variabili.PROFILE_IMG)){
+            filePath = Variabili.PATH_PROFILE_IMG + User.getName();
+            redirect = "/WebForum/servletDatiUtente";
+        }
+        else if(request.getParameter(Variabili.OP).equals(Variabili.PDF)){
+            filePath = Variabili.PATH_GROUPS + gname + "_" + gadmin;
+        }
+        else{
+            // error 404
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
+        
+        //creo il filepath se non esiste
+        File f = new File(filePath);
         f.mkdirs();
         
         this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
@@ -55,6 +64,6 @@ public class ServletUpload extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(ServletUpload.class.getName()).log(Level.SEVERE, null, ex);
         }
-        response.sendRedirect("/WebForum/servletDatiUtente");
+        response.sendRedirect(redirect);
     }
 }  

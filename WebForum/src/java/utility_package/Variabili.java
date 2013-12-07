@@ -11,7 +11,9 @@ public class Variabili {
     
     public static final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
     
-    public static final String FILEPATH = "/WebForum/groups/";
+    public static final String PATH_GROUPS = "/WebForum/groups/";
+    
+   public static final String PATH_PROFILE_IMG = "/WebForum/profileIMG/";
     
     public static final String OP = "op";
     

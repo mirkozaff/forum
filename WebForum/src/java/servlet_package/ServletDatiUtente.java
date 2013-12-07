@@ -44,7 +44,7 @@ public class ServletDatiUtente extends HttpServlet {
                     + "\" alt=\"No image.\" class=\"img-rounded center-block\" style=\"width: 400px\"> "
                     + "</div>"
                     + "</div>"
-                    + "<form action=\"servletUpload\" method=POST enctype=\"multipart/form-data\">"
+                    + "<form action=\"servletUpload?op=img_profilo\" method=POST enctype=\"multipart/form-data\">"
                     + "<input class=\"btn btn-lg btn-success\" type=\"submit\" value=\"Upload\">"
                     + "<input class = \"btn btn-lg btn-success\" type=file name=file1>"
                     + "</form>"
