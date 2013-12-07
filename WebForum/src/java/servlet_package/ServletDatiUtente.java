@@ -39,7 +39,8 @@ public class ServletDatiUtente extends HttpServlet {
                }
             }
             out.println("<img src=\"file/"
-                    + User.imageURL
+                    + User.imageURL 
+                    + "?op=img_profilo\""
                     + "\" alt=\"No image.\" class=\"img-rounded center-block\" style=\"width: 400px\"> "
                     + "</div>"
                     + "</div>"

@@ -40,8 +40,8 @@ public class ServletUpload extends HttpServlet {
         File f = new File(path);
         f.mkdirs();
         
-        
         this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
+        
         String filename = "";
         try{    
             MultipartRequest multi = new MultipartRequest(request, f.getAbsolutePath(), 10*1024*1024, "ISO-8859-1", new DefaultFileRenamePolicy());
