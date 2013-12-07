@@ -124,7 +124,7 @@ public class ServletMainPage extends HttpServlet {
             out.println("</table>"
                         + "</div>"                     
 			+ "<div class=\"col-lg-4\">"
-			+ "<img src=\"file/" + User.getImageURL() +"\" alt=\"cagna\" class=\"img-rounded\" style=\"width: 300px\">"
+			+ "<img src=\"file/" + User.getImageURL() +"?op=img_profilo\" alt=\"cagna\" class=\"img-rounded\" style=\"width: 300px\">"
 			+ "</div>"                    
 			+ "</div>"                    
 		        + "</div>"

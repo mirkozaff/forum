@@ -4,9 +4,12 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.codec.Base64;
 import db_package.DBmanager;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -37,8 +40,13 @@ public class ServletPDF extends HttpServlet {
         String gadmin = request.getParameter("gadmin");
         Report rep = new Report(gname, gadmin, manager.utentiPartecipantiPDF(gname, gadmin).toString(), manager.ultimaDataPDF(gname, gadmin), manager.numeroPostPDF(gname, gadmin));
         
+        //crea la folder del gruppo se non esiste con nome "gname_gadmin"
+        File grupFolder = new File(Variabili.FILEPATH + gname + "_" + gadmin);
+        grupFolder.mkdirs();
+        
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(Variabili.FILENAME + gname + ".pdf"));
+        FileOutputStream report = new FileOutputStream(Variabili.FILEPATH + gname + "_" + gadmin + "/" + "report.pdf");
+        PdfWriter.getInstance(document,report );
         document.open();
         Paragraph inizio = new Paragraph("Report gruppo \"" + rep.getGname() + "\" di \"" + rep.getGadmin() + "\"\n");
         Paragraph utentiPartecipanti = new Paragraph("Utenti Partecipanti: " + rep.getUtentiPartecipanti() + "\n");
@@ -49,32 +57,7 @@ public class ServletPDF extends HttpServlet {
         document.add(dataUltimoPost);
         document.add(numeroPost);        
         document.close();
-        
-        out.println("<!DOCTYPE html>"
-                + "<html lang=\"en\">"
-                + "<head>"
-                + "<meta charset=\"utf-8\">"
-                + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">"
-                + "<title>pdf</title>"
-                + "<link href=\"bootstrapCSS/bootstrap.css\" rel=\"stylesheet\">"
-                + "<link href=\"forumCSS/pdfcreato.css\" rel=\"stylesheet\">"
-                + "</head>"
-                + "<body>"
-                + "<div id=\"wrap\">"
-                + "<div class=\"container\">"
-                + "<div class=\"page-header\">"
-                + "<h1>Il PDF del gruppo è stato creato!</h1>"
-                + "</div>"
-                + "<p class=\"lead\">puoi trovare il documento pdf sul tuo desktop</p>"
-                + "<form action=\"servletVisualizzaPost\" method=POST>"
-                + "<button type=\"submit\" class=\"btn btn-primary\">torna al gruppo</button>"
-                + "<input type=\"hidden\" name=\"gname\" value=\""+gname+"\">"
-                + "<input type=\"hidden\" name=\"gadmin\" value=\""+gadmin+"\">"
-                + "</form>"
-                + "</div>"
-                + "</div>"
-                + "</body>"
-                + "</html>");
+        response.sendRedirect("/WebForum/file/report.pdf?op=pdf&gname="+gname+"&gadmin="+gadmin);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
