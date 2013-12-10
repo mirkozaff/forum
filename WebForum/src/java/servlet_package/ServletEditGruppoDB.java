@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package servlet_package;
 
 import db_package.DBmanager;
@@ -17,7 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utility_package.User;
+import utility_package.Functions;
 
 //questa servlet aggiorna il database in base al gruppo che l'utente vuole creare
 public class ServletEditGruppoDB extends HttpServlet {
@@ -38,9 +32,9 @@ DBmanager manager;
 
         if(bottone.toString().equals("crea")){
         //provo a creare il gruppo richiesto
-        manager.aggiornalistagruppi(nomegruppo,User.getName(), utentiNuovoGruppo);
+        manager.aggiornalistagruppi(nomegruppo,Functions.getUserName(request), utentiNuovoGruppo);
         }else if(bottone.toString().equals("modifica") && gname.toString()!=null){
-        manager.modificagruppo(gname, nomegruppo, User.getName(), utentiNuovoGruppo);
+        manager.modificagruppo(gname, nomegruppo, Functions.getUserName(request), utentiNuovoGruppo);
         }
         
         

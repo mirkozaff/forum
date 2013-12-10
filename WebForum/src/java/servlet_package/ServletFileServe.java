@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utility_package.Functions;
-import utility_package.User;
 import utility_package.Variabili;
 
 
@@ -30,7 +29,7 @@ public class ServletFileServe extends HttpServlet {
         
         //setta il path
         if(request.getParameter(Variabili.OP).equals(Variabili.PROFILE_IMG)){
-            filePath = Variabili.PATH_PROFILE_IMG + User.getName();
+            filePath = Variabili.PATH_PROFILE_IMG + Functions.getUserName(request);
         }
         else if(request.getParameter(Variabili.OP).equals(Variabili.PDF)){
             filePath = Variabili.PATH_GROUPS + gname + "_" + gadmin;

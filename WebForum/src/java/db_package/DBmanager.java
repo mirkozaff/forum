@@ -1,6 +1,5 @@
 package db_package;
 
-import utility_package.User;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -9,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 import utility_package.Post;
 
 
@@ -41,8 +41,6 @@ public class DBmanager implements Serializable{
             ResultSet rs = stm.executeQuery();
             try{
             if(rs.next()){
-                User.name = name;
-                User.password = password;
                 return true;
             } else {
                 return false;
@@ -73,14 +71,14 @@ public class DBmanager implements Serializable{
          stm.close();
         }
    }
-    public void getImageURL(String name) throws SQLException{
+    public void getImageURL(String name, HttpSession session) throws SQLException{
         PreparedStatement stm = con.prepareStatement("SELECT URL_IMAGE FROM utenti WHERE NAME= ?");
         try{
             stm.setString(1, name);
             ResultSet rs = stm.executeQuery();
             try{
                 while(rs.next()){
-                    User.imageURL = (rs.getString(1));
+                    session.setAttribute("img",(rs.getString(1)));
                 }
             }finally {
                 rs.close();
@@ -89,13 +87,13 @@ public class DBmanager implements Serializable{
          stm.close();
         }    
     }
-    public void setImageURL(String name, String imgURL) throws SQLException{
+    public void setImageURL(String name, String imgURL, HttpSession session) throws SQLException{
         PreparedStatement stm = con.prepareStatement("UPDATE utenti SET URL_IMAGE= ? WHERE NAME= ?");
         
         try{
             stm.setString(1, imgURL);
             stm.setString(2, name);
-            User.imageURL = imgURL;
+            session.setAttribute("img", imgURL);
             stm.execute();
          }finally {
          stm.close();

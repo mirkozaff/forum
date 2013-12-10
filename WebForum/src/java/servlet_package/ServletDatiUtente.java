@@ -1,6 +1,5 @@
 package servlet_package;
 
-import utility_package.User;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utility_package.Functions;
 
 
 @WebServlet(name = "ServletDatiUtente", urlPatterns = {"/ServletDatiUtente"})
@@ -39,7 +39,7 @@ public class ServletDatiUtente extends HttpServlet {
                }
             }
             out.println("<img src=\"file/"
-                    + User.imageURL 
+                    + Functions.getUserIMG(request)
                     + "?op=img_profilo\""
                     + "\" alt=\"No image.\" class=\"img-rounded center-block\" style=\"width: 400px\"> "
                     + "</div>"

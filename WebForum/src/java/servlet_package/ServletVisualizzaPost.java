@@ -11,14 +11,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utility_package.Functions;
 import utility_package.Post;
-import utility_package.User;
 
 public class ServletVisualizzaPost extends HttpServlet {
     private DBmanager manager;
@@ -54,7 +53,7 @@ public class ServletVisualizzaPost extends HttpServlet {
            out.println("<input type=\"hidden\" name=\"gadmin\" value=\""+gadmin+"\">");
            out.println("</form></div></div></div></div></div><div class=\"navbar-default divcentrato\">");
            out.println("<p align=\"center\" style=\"font-size: 250%\">"+gname+"</p>");
-           if(gadmin.toString().equals(User.getName())){
+           if(gadmin.toString().equals(Functions.getUserName(request))){
            out.println("<div style=\"text-align: center\">"
                    + "<form action=\"servletEditGruppo\" method=POST>"
                    + "<button type=\"submit\" class=\"btn btn-success navbar-btn\">edita gruppo</button>&nbsp;"

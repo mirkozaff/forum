@@ -1,6 +1,5 @@
 package servlet_package;
 
-import utility_package.User;
 import db_package.DBmanager;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -12,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import utility_package.Functions;
 import utility_package.Variabili;
 
 
@@ -19,7 +19,7 @@ public class ServletCheckLogin extends HttpServlet {
 
     DBmanager manager;
     Cookie lastAccessedTime = new Cookie("ultimoAccesso", null);
-    String name, password;
+    String userName, password;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -32,30 +32,30 @@ public class ServletCheckLogin extends HttpServlet {
         if(session.isNew()){
             
             //prendo i parametri dala richiesta
-            name = request.getParameter("name");   
+            userName = request.getParameter("name");   
             password = request.getParameter("password"); 
-            session.setAttribute("name", name);
+            session.setAttribute("name", userName);
             session.setAttribute("password", password);
         }
         else{
-            name = session.getAttribute("name").toString();
-            password = session.getAttribute("password").toString();
+            userName = Functions.getUserName(request);
+            password = Functions.getUserPassword(request);
             lastAccessedTime.setValue(Long.toString(session.getLastAccessedTime()));
         }
         
         //se l'user esiste nel database e la password è corretta
-        if(manager.authenticate(name, password)){
+        if(manager.authenticate(userName, password)){
             
             System.out.println("autenticato");
             System.out.println("Prima connessione");
-            System.out.println(User.getName());
-            System.out.println(User.getPassword());
+            System.out.println(userName);
+            System.out.println(password);
             
             //ricavo url immagine
-            manager.getImageURL(User.getName());
+            manager.getImageURL(Functions.getUserName(request), request.getSession());
 
             //aggiungo il cookie della data ultimo accesso
-            lastAccessedTime.setMaxAge(-1);
+            lastAccessedTime.setMaxAge(1000);
             response.addCookie(lastAccessedTime);
             
             // rimando alla Main Page

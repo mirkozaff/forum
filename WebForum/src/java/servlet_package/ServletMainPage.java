@@ -1,7 +1,6 @@
 package servlet_package;
 
 import db_package.DBmanager;
-import utility_package.User;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +18,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import utility_package.Functions;
 
 
 
@@ -55,7 +55,7 @@ public class ServletMainPage extends HttpServlet {
         ArrayList<String> listagname = new <String>ArrayList();
         ArrayList<String> listagadmin = new <String>ArrayList();
         //chiedo se ci sono inviti per l'utente
-        manager.getinviti(User.getName(),listagname, listagadmin);
+        manager.getinviti(Functions.getUserName(request),listagname, listagadmin);
         
         String mainPage = "forumHTML/mainPage.html";
         PrintWriter out = response.getWriter();       
@@ -85,7 +85,7 @@ public class ServletMainPage extends HttpServlet {
                         + "<h2> lista inviti </h2>"         
 			+ "</div>"                    
 			+ "<div class=\"col-lg-4\">"
-                        + "<h2> Benvenuto " + User.name + "!</h2>"
+                        + "<h2> Benvenuto " + Functions.getUserName(request) + "!</h2>"
 			+ "</div>"
                         + "</div>"
 			+ "<div class=\"row\">"
@@ -124,7 +124,7 @@ public class ServletMainPage extends HttpServlet {
             out.println("</table>"
                         + "</div>"                     
 			+ "<div class=\"col-lg-4\">"
-			+ "<img src=\"file/" + User.getImageURL() +"?op=img_profilo\" alt=\"cagna\" class=\"img-rounded\" style=\"width: 300px\">"
+			+ "<img src=\"file/" + Functions.getUserIMG(request) +"?op=img_profilo\" alt=\"cagna\" class=\"img-rounded\" style=\"width: 300px\">"
 			+ "</div>"                    
 			+ "</div>"                    
 		        + "</div>"
