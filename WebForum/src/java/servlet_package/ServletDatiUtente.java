@@ -41,7 +41,7 @@ public class ServletDatiUtente extends HttpServlet {
             out.println("<img src=\"file/"
                     + Functions.getUserIMG(request)
                     + "?op=img_profilo\""
-                    + "\" alt=\"No image.\" class=\"img-rounded center-block\" style=\"width: 400px\"> "
+                    + "\" alt=\"no image.\" onerror=\"src=\'/WebForum/forumIMG/default-no-profile-pic.jpg'\" class=\"img-rounded center-block\" style=\"width: 400px\"> "
                     + "</div>"
                     + "</div>"
                     + "<form action=\"servletUpload?op=img_profilo\" method=POST enctype=\"multipart/form-data\">"

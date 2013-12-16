@@ -124,7 +124,7 @@ public class ServletMainPage extends HttpServlet {
             out.println("</table>"
                         + "</div>"                     
 			+ "<div class=\"col-lg-4\">"
-			+ "<img src=\"file/" + Functions.getUserIMG(request) +"?op=img_profilo\" alt=\"cagna\" class=\"img-rounded\" style=\"width: 300px\">"
+			+ "<img src=\"file/" + Functions.getUserIMG(request) +"?op=img_profilo\" alt=\"no image.\" onerror=\"src=\'/WebForum/forumIMG/default-no-profile-pic.jpg'\" class=\"img-rounded\" style=\"width: 300px\">"
 			+ "</div>"                    
 			+ "</div>"                    
 		        + "</div>"

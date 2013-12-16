@@ -82,7 +82,7 @@ public class ServletVisualizzaPost extends HttpServlet {
                    + "</div>"
                    + "<div class=\"row\">"
                    + "<div>"
-                   + "<img src=\"file/"+ manager.getAvatar(listapost.get(i).getUtente_postante())+"?op=img_avatar&avatar=" +listapost.get(i).getUtente_postante()+ "\" alt=\"cagna\" class=\"img-rounded\" style=\"width: 100px\">"
+                   + "<img src=\"file/"+ manager.getAvatar(listapost.get(i).getUtente_postante())+"?op=img_avatar&avatar=" +listapost.get(i).getUtente_postante()+ "\" alt=\"no image.\" onerror=\"src=\'/WebForum/forumIMG/default-no-profile-pic.jpg'\" class=\"img-rounded\" style=\"width: 100px\">"
                    + "</div>"
                    + "</div>"
                    + "<div class=\"row\">"
