@@ -20,21 +20,26 @@ public class ServletFileServe extends HttpServlet {
     private String filePath;
     private String gname;
     private String gadmin;
+    private String userAvatar;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {   
         
         gadmin = request.getParameter("gadmin");
-        gname = request.getParameter("gname");        
+        gname = request.getParameter("gname"); 
+        userAvatar = request.getParameter("avatar");
         
         //setta il path
         if(request.getParameter(Variabili.OP).equals(Variabili.PROFILE_IMG)){
             filePath = Variabili.PATH_PROFILE_IMG + Functions.getUserName(request);
         }
+        else if(request.getParameter(Variabili.OP).equals(Variabili.AVATAR_IMG)){
+            filePath = Variabili.PATH_PROFILE_IMG + userAvatar;
+        }
         else if(request.getParameter(Variabili.OP).equals(Variabili.PDF)){
             filePath = Variabili.PATH_GROUPS + gname + "_" + gadmin;
         }
-        else if(request.getParameter(Variabili.OP).equals("allegato")){
+        else if(request.getParameter(Variabili.OP).equals(Variabili.ALLEGATO)){
             filePath = Variabili.PATH_GROUPS + gname + "_" + gadmin;
         }
         else{

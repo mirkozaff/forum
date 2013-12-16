@@ -87,6 +87,24 @@ public class DBmanager implements Serializable{
          stm.close();
         }    
     }
+    
+    public String getAvatar(String name) throws SQLException{
+        PreparedStatement stm = con.prepareStatement("SELECT URL_IMAGE FROM utenti WHERE NAME= ?");
+        try{
+            stm.setString(1, name);
+            ResultSet rs = stm.executeQuery();
+            try{
+                while(rs.next()){
+                    return rs.getString(1);
+                }
+            }finally {
+                rs.close();
+            }
+        }finally {
+         stm.close();
+        }  
+        return "noIMG";
+    }
     public void setImageURL(String name, String imgURL, HttpSession session) throws SQLException{
         PreparedStatement stm = con.prepareStatement("UPDATE utenti SET URL_IMAGE= ? WHERE NAME= ?");
         
@@ -99,6 +117,7 @@ public class DBmanager implements Serializable{
          stm.close();
         }    
     }
+    
      public void listanomi(ArrayList<String> listanomi) throws SQLException{
         PreparedStatement stm = con.prepareStatement("SELECT NAME FROM utenti");
         try{

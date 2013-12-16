@@ -19,7 +19,11 @@ public class Variabili {
     
     public static final String PROFILE_IMG = "img_profilo";
     
+    public static final String AVATAR_IMG = "img_avatar";
+    
     public static final String PDF = "pdf";
     
     public static final String TESTO = "testo";
+    
+    public static final String ALLEGATO = "allegato";
 }

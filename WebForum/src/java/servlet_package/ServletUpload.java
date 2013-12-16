@@ -70,7 +70,9 @@ public class ServletUpload extends HttpServlet {
             }
             if(post != null){
                 String data = new Date().toString();
-                post = post + " <a href=\"file/" +filename+ "?op=allegato&gname="+gname+"&gadmin="+gadmin+"\" target=\"_blank\">"+filename+"</a>";
+                if(filename != null){
+                    post = post + " <a href=\"file/" +filename+ "?op=allegato&gname="+gname+"&gadmin="+gadmin+"\" target=\"_blank\">"+filename+"</a>";
+                }    
                 manager.aggiornapost(post, Functions.getUserName(request), gname, gadmin, data);
             }
         }
