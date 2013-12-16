@@ -34,6 +34,9 @@ public class ServletFileServe extends HttpServlet {
         else if(request.getParameter(Variabili.OP).equals(Variabili.PDF)){
             filePath = Variabili.PATH_GROUPS + gname + "_" + gadmin;
         }
+        else if(request.getParameter(Variabili.OP).equals("allegato")){
+            filePath = Variabili.PATH_GROUPS + gname + "_" + gadmin;
+        }
         else{
             // error 404
             response.sendError(HttpServletResponse.SC_NOT_FOUND);

@@ -20,4 +20,6 @@ public class Variabili {
     public static final String PROFILE_IMG = "img_profilo";
     
     public static final String PDF = "pdf";
+    
+    public static final String TESTO = "testo";
 }

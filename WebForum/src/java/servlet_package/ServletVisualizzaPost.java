@@ -49,6 +49,10 @@ public class ServletVisualizzaPost extends HttpServlet {
                    out.println(text);
                }
            }
+           out.print("<form id=\"form\" action=\"servletUpload?op=testo&gname=" +gname+ "&gadmin=" +gadmin+ "\" method=POST enctype=\"multipart/form-data\">"
+               + "<input type=\"file\" name=\"filepost\">"
+               + "<button type=\"submit\" class=\"btn btn-primary\" name=\"bottone\" value=\"upload_gruppi\">Save changes</button>"
+               + "<input type=\"hidden\" name=\"op\" value=\"testo\">");
            out.println("<input type=\"hidden\" name=\"gname\" value=\""+gname+"\">");
            out.println("<input type=\"hidden\" name=\"gadmin\" value=\""+gadmin+"\">");
            out.println("</form></div></div></div></div></div><div class=\"navbar-default divcentrato\">");
