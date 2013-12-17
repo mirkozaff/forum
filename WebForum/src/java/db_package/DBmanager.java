@@ -150,11 +150,32 @@ public class DBmanager implements Serializable{
          stm.close();
         }
      }
+      
+      public int getMaxID() throws SQLException{
+          int a = 0;
+          PreparedStatement stm = con.prepareStatement("SELECT MAX(ID) FROM Gruppi"); 
+          try{
+            ResultSet rs = stm.executeQuery();
+            try{
+                while(rs.next()){
+                    a = rs.getInt(1);
+                }
+            }finally {
+                rs.close();
+            }
+        }finally {
+         stm.close();
+        }  
+        return a;
+      }
+      
+      
      public void aggiornalistagruppi(String gname, String adminname, String[] utentiNuovoGruppo) throws SQLException{  
          
+         int idValue = getMaxID();
          //cerco se esiste già un record nella tabella "gruppi" in cui il nome del gruppo e l'admin sono uguali a quelli che voglio creare
         PreparedStatement stm = con.prepareStatement("SELECT DISTINCT GNAME,GADMIN FROM gruppi where GNAME=? AND GADMIN=?"); 
-        PreparedStatement stm2 = con.prepareStatement("INSERT INTO gruppi(GNAME,UTENTE,GADMIN,INVITATO) VALUES (?,?,?,?)");
+        PreparedStatement stm2 = con.prepareStatement("INSERT INTO gruppi(ID,GNAME,UTENTE,GADMIN,INVITATO) VALUES (?,?,?,?,?)");
         try{
             stm.setString(1, gname);
             stm.setString(2, adminname);
@@ -163,19 +184,21 @@ public class DBmanager implements Serializable{
             // se il gruppo che voglio creare è nuovo(ossia la coppia gname e gadmin che voglio creare non è gia presente) lo creo
             if(rs.next()==false){
                 
-                //aggiorno il db con il record riguardante l'admin (gname, admin, admin)
-                stm2.setString(1, gname);
-                stm2.setString(2, adminname);
+                //aggiorno il db con il record riguardante l'admin (id,gname, admin, admin)
+                stm2.setInt(1, idValue+1);
+                stm2.setString(2, gname);
                 stm2.setString(3, adminname);
-                stm2.setBoolean(4, false);
+                stm2.setString(4, adminname);
+                stm2.setBoolean(5, false);
                 stm2.execute();                
                 
                 //aggiorno il db con il record riguardante gli invitati (gname, admin, admin)
                 for(int i=0; i<utentiNuovoGruppo.length;i++){
-                stm2.setString(1, gname);
-                stm2.setString(2, utentiNuovoGruppo[i]);
-                stm2.setString(3, adminname);
-                stm2.setBoolean(4, true);
+                stm2.setInt(1, idValue+1);
+                stm2.setString(2, gname);
+                stm2.setString(3, utentiNuovoGruppo[i]);
+                stm2.setString(4, adminname);
+                stm2.setBoolean(5, true);
                 stm2.execute();
                 }
             }else{
