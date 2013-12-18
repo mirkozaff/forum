@@ -7,9 +7,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,24 +19,16 @@ import utility_package.Variabili;
 public class ServletFileServe extends HttpServlet {
 
     private String filePath;
-    private String gname;
-    private String gadmin;
+    private String gID;
     private String userAvatar;
     private DBmanager manager;
-    private int gID;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {   
         
         this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
         
-        gadmin = request.getParameter("gadmin");
-        gname = request.getParameter("gname");
-        try {
-            int gID = manager.getGroupID(gname, gadmin);
-        } catch (SQLException ex) {
-            Logger.getLogger(ServletFileServe.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        gID = request.getParameter("gid");
         userAvatar = request.getParameter("avatar");
         
         //setta il path
@@ -50,15 +39,16 @@ public class ServletFileServe extends HttpServlet {
             filePath = Variabili.PATH_PROFILE_IMG + userAvatar;
         }
         else if(request.getParameter(Variabili.OP).equals(Variabili.PDF)){
-            filePath = Variabili.PATH_GROUPS + String.valueOf(gID);
+            filePath = Variabili.PATH_GROUPS + gID;
         }
         else if(request.getParameter(Variabili.OP).equals(Variabili.ALLEGATO)){
-            filePath = Variabili.PATH_GROUPS + String.valueOf(gID);
+            filePath = Variabili.PATH_GROUPS + gID;
         }
         else{
             // error 404
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
+        
         // prende il fiel richiesto dalle path info
         String requestedFile = request.getPathInfo();
         // verifica che il file sia supportato dalla requested URI

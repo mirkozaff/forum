@@ -56,7 +56,7 @@ public class ServletPDF extends HttpServlet {
         document.add(dataUltimoPost);
         document.add(numeroPost);        
         document.close();
-        response.sendRedirect("/WebForum/file/report.pdf?op=pdf&gname="+gname+"&gadmin="+gadmin);
+        response.sendRedirect("/WebForum/file/report.pdf?op=pdf&gid="+String.valueOf(gID));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
