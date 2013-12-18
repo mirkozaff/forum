@@ -1,11 +1,15 @@
 package servlet_package;
 
+import db_package.DBmanager;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,12 +25,21 @@ public class ServletFileServe extends HttpServlet {
     private String gname;
     private String gadmin;
     private String userAvatar;
+    private DBmanager manager;
+    private int gID;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {   
         
+        this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
+        
         gadmin = request.getParameter("gadmin");
-        gname = request.getParameter("gname"); 
+        gname = request.getParameter("gname");
+        try {
+            int gID = manager.getGroupID(gname, gadmin);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletFileServe.class.getName()).log(Level.SEVERE, null, ex);
+        }
         userAvatar = request.getParameter("avatar");
         
         //setta il path
@@ -37,10 +50,10 @@ public class ServletFileServe extends HttpServlet {
             filePath = Variabili.PATH_PROFILE_IMG + userAvatar;
         }
         else if(request.getParameter(Variabili.OP).equals(Variabili.PDF)){
-            filePath = Variabili.PATH_GROUPS + gname + "_" + gadmin;
+            filePath = Variabili.PATH_GROUPS + String.valueOf(gID);
         }
         else if(request.getParameter(Variabili.OP).equals(Variabili.ALLEGATO)){
-            filePath = Variabili.PATH_GROUPS + gname + "_" + gadmin;
+            filePath = Variabili.PATH_GROUPS + String.valueOf(gID);
         }
         else{
             // error 404

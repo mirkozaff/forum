@@ -36,14 +36,15 @@ public class ServletPDF extends HttpServlet {
         
         String gname = request.getParameter("gname");
         String gadmin = request.getParameter("gadmin");
+        int gID = manager.getGroupID(gname, gadmin);
         Report rep = new Report(gname, gadmin, manager.utentiPartecipantiPDF(gname, gadmin).toString(), manager.ultimaDataPDF(gname, gadmin), manager.numeroPostPDF(gname, gadmin));
         
-        //crea la folder del gruppo se non esiste con nome "gname_gadmin"
-        File grupFolder = new File(Variabili.PATH_GROUPS + gname + "_" + gadmin);
+        //crea la folder del gruppo se non esiste con nome "gID"
+        File grupFolder = new File(Variabili.PATH_GROUPS + String.valueOf(gID));
         grupFolder.mkdirs();
         
         Document document = new Document();
-        FileOutputStream report = new FileOutputStream(Variabili.PATH_GROUPS + gname + "_" + gadmin + "/" + "report.pdf");
+        FileOutputStream report = new FileOutputStream(Variabili.PATH_GROUPS + String.valueOf(gID) + "/" + "report.pdf");
         PdfWriter.getInstance(document,report );
         document.open();
         Paragraph inizio = new Paragraph("Report gruppo \"" + rep.getGname() + "\" di \"" + rep.getGadmin() + "\"\n");
