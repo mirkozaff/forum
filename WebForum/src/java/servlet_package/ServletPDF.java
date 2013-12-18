@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -56,7 +57,12 @@ public class ServletPDF extends HttpServlet {
         document.add(dataUltimoPost);
         document.add(numeroPost);        
         document.close();
-        response.sendRedirect("/WebForum/file/report.pdf?op=pdf&gid="+String.valueOf(gID));
+        
+        request.setAttribute("op", "pdf");
+        request.setAttribute("gid", String.valueOf(gID));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/file/report.pdf");
+        dispatcher.forward(request, response);
+        //response.sendRedirect("/WebForum/file/report.pdf?op=pdf&gid="+String.valueOf(gID));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

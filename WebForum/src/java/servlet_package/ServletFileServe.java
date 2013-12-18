@@ -23,25 +23,25 @@ public class ServletFileServe extends HttpServlet {
     private String userAvatar;
     private DBmanager manager;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {   
         
         this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
         
-        gID = request.getParameter("gid");
+        gID = request.getAttribute("gid").toString();
         userAvatar = request.getParameter("avatar");
         
         //setta il path
-        if(request.getParameter(Variabili.OP).equals(Variabili.PROFILE_IMG)){
+        if(request.getAttribute(Variabili.OP).toString().equals(Variabili.PROFILE_IMG)){
             filePath = Variabili.PATH_PROFILE_IMG + Functions.getUserName(request);
         }
-        else if(request.getParameter(Variabili.OP).equals(Variabili.AVATAR_IMG)){
+        else if(request.getAttribute(Variabili.OP).toString().equals(Variabili.AVATAR_IMG)){
             filePath = Variabili.PATH_PROFILE_IMG + userAvatar;
         }
-        else if(request.getParameter(Variabili.OP).equals(Variabili.PDF)){
+        else if(request.getAttribute(Variabili.OP).toString().equals(Variabili.PDF)){
             filePath = Variabili.PATH_GROUPS + gID;
         }
-        else if(request.getParameter(Variabili.OP).equals(Variabili.ALLEGATO)){
+        else if(request.getAttribute(Variabili.OP).toString().equals(Variabili.ALLEGATO)){
             filePath = Variabili.PATH_GROUPS + gID;
         }
         else{
