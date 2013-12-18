@@ -321,7 +321,7 @@ public class DBmanager implements Serializable{
          //faccio l'update del nome del gruppo
          PreparedStatement stm = con.prepareStatement("UPDATE gruppi SET GNAME=? WHERE GNAME=? AND GADMIN=?");
          //aggiungo i nuovi utenti invitati
-         PreparedStatement stm2 = con.prepareStatement("INSERT INTO gruppi(GNAME,UTENTE,GADMIN,INVITATO) VALUES (?,?,?,?)");
+         PreparedStatement stm2 = con.prepareStatement("INSERT INTO gruppi(ID,GNAME,UTENTE,GADMIN,INVITATO) VALUES (?,?,?,?,?)");
          
          try{
              stm.setString(1, newgname);
@@ -337,12 +337,13 @@ public class DBmanager implements Serializable{
          {
                 //aggiorno il db con il record riguardante gli invitati (gname, admin, admin)
                 for(int i=0; i<utentiNuovoGruppo.length;i++){
-                stm2.setString(1, newgname);
-                stm2.setString(2, utentiNuovoGruppo[i]);
-                stm2.setString(3, gadmin);
-                stm2.setBoolean(4, true);
-                stm2.execute();
-                System.out.println("aggiunti i nuovi tizi invitati");
+                    stm2.setInt(1, getGroupID(newgname, gadmin));
+                    stm2.setString(2, newgname);
+                    stm2.setString(3, utentiNuovoGruppo[i]);
+                    stm2.setString(4, gadmin);
+                    stm2.setBoolean(5, true);
+                    stm2.execute();
+                    System.out.println("aggiunti i nuovi tizi invitati");
                 }
          }finally {
             stm2.close();
