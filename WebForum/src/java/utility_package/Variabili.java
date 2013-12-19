@@ -26,4 +26,8 @@ public class Variabili {
     public static final String TESTO = "testo";
     
     public static final String ALLEGATO = "allegato";
+    
+    public static final String AVATAR = "avatar";
+    
+    public static final String GID = "gid";
 }

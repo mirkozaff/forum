@@ -1,6 +1,5 @@
 package servlet_package;
 
-import db_package.DBmanager;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -21,33 +20,56 @@ public class ServletFileServe extends HttpServlet {
     private String filePath;
     private String gID;
     private String userAvatar;
-    private DBmanager manager;
+    private String operation;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {   
         
-        this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
-        
-        gID = request.getAttribute("gid").toString();
-        userAvatar = request.getParameter("avatar");
+        //richiedo il gruop id ed l'operazione
+        gID = request.getAttribute(Variabili.GID).toString();
+        operation = request.getAttribute(Variabili.OP).toString();
         
         //setta il path
-        if(request.getAttribute(Variabili.OP).toString().equals(Variabili.PROFILE_IMG)){
-            filePath = Variabili.PATH_PROFILE_IMG + Functions.getUserName(request);
-        }
-        else if(request.getAttribute(Variabili.OP).toString().equals(Variabili.AVATAR_IMG)){
-            filePath = Variabili.PATH_PROFILE_IMG + userAvatar;
-        }
-        else if(request.getAttribute(Variabili.OP).toString().equals(Variabili.PDF)){
+        if(operation.equals(Variabili.PDF)){
             filePath = Variabili.PATH_GROUPS + gID;
         }
-        else if(request.getAttribute(Variabili.OP).toString().equals(Variabili.ALLEGATO)){
+        else if(operation.equals(Variabili.ALLEGATO)){
             filePath = Variabili.PATH_GROUPS + gID;
         }
         else{
             // error 404
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
+        //invio il filepath alla funzione che gestisce il download
+        serveFile(filePath, request, response);
+    }
+    
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {   
+        
+        //richiedo il nome dell'utente di cui necessito l'avatar ed l'operazione
+        userAvatar = request.getParameter(Variabili.AVATAR);
+        operation = request.getParameter(Variabili.OP);
+        
+        //setta il path
+        if(operation.equals(Variabili.PROFILE_IMG)){
+            filePath = Variabili.PATH_PROFILE_IMG + Functions.getUserName(request);
+        }
+        else if(operation.equals(Variabili.AVATAR_IMG)){
+            filePath = Variabili.PATH_PROFILE_IMG + userAvatar;
+        }
+        else{
+            // error 404
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
+        
+        //invio il filepath alla funzione che gestisce il download
+        serveFile(filePath, request, response);
+    }
+        
+    
+    protected void serveFile(String filePath, HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
         
         // prende il fiel richiesto dalle path info
         String requestedFile = request.getPathInfo();

@@ -50,7 +50,13 @@ public class ServletPDF extends HttpServlet {
         document.open();
         Paragraph inizio = new Paragraph("Report gruppo \"" + rep.getGname() + "\" di \"" + rep.getGadmin() + "\"\n");
         Paragraph utentiPartecipanti = new Paragraph("Utenti Partecipanti: " + rep.getUtentiPartecipanti() + "\n");
-        Paragraph dataUltimoPost = new Paragraph("Data ultimo post: " + rep.getDataUltimoPost() + "\n");
+        Paragraph dataUltimoPost;
+        if(rep.getNumeroPost() == 0){
+            dataUltimoPost = new Paragraph("Data ultimo post: nessun post in questo gruppo\n");
+        }
+        else{
+            dataUltimoPost = new Paragraph("Data ultimo post: " + rep.getDataUltimoPost() + "\n");
+        }
         Paragraph numeroPost = new Paragraph("Numero post fatti: " + rep.getNumeroPost());
         document.add(inizio);
         document.add(utentiPartecipanti);
