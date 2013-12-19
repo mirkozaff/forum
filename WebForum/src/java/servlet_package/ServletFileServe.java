@@ -1,5 +1,6 @@
 package servlet_package;
 
+import db_package.DBmanager;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -21,19 +22,17 @@ public class ServletFileServe extends HttpServlet {
     private String gID;
     private String userAvatar;
     private String operation;
+    DBmanager manager;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {   
         
-        //richiedo il gruop id ed l'operazione
+        //richiedo il group id ed l'operazione
         gID = request.getAttribute(Variabili.GID).toString();
         operation = request.getAttribute(Variabili.OP).toString();
         
         //setta il path
         if(operation.equals(Variabili.PDF)){
-            filePath = Variabili.PATH_GROUPS + gID;
-        }
-        else if(operation.equals(Variabili.ALLEGATO)){
             filePath = Variabili.PATH_GROUPS + gID;
         }
         else{
@@ -48,6 +47,7 @@ public class ServletFileServe extends HttpServlet {
         throws ServletException, IOException {   
         
         //richiedo il nome dell'utente di cui necessito l'avatar ed l'operazione
+        gID = request.getParameter(Variabili.GID);
         userAvatar = request.getParameter(Variabili.AVATAR);
         operation = request.getParameter(Variabili.OP);
         
@@ -57,6 +57,9 @@ public class ServletFileServe extends HttpServlet {
         }
         else if(operation.equals(Variabili.AVATAR_IMG)){
             filePath = Variabili.PATH_PROFILE_IMG + userAvatar;
+        }
+        else if(operation.equals(Variabili.ALLEGATO)){
+            filePath = Variabili.PATH_GROUPS + gID;
         }
         else{
             // error 404

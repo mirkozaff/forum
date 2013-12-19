@@ -25,16 +25,20 @@ public class ServletUpload extends HttpServlet {
     private String filePath;
     private String gname;
     private String gadmin;
+    private String gid;
     private String redirect;
     private boolean imgChange = false;
     DBmanager manager;
     
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+    public void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException, SQLException{
+        
+        this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
         
         //prendo i valori dei parametri
         gadmin = request.getParameter("gadmin");
-        gname = request.getParameter("gname");  
+        gname = request.getParameter("gname"); 
+        gid = String.valueOf(manager.getGroupID(gname, gadmin));
         
         //setta il path
         if(request.getParameter(Variabili.OP).equals(Variabili.PROFILE_IMG)){
@@ -43,7 +47,7 @@ public class ServletUpload extends HttpServlet {
             imgChange = true;
         }
         else if(request.getParameter(Variabili.OP).equals(Variabili.TESTO)){
-            filePath = Variabili.PATH_GROUPS + gname + "_" + gadmin;
+            filePath = Variabili.PATH_GROUPS + gid;
             redirect = "/WebForum/servletVisualizzaPost?gname="+gname+"&gadmin="+gadmin;
         }
         else{
@@ -54,9 +58,7 @@ public class ServletUpload extends HttpServlet {
         //creo il filepath se non esiste
         File f = new File(filePath);
         f.mkdirs();
-        
-        this.manager = (DBmanager)super.getServletContext().getAttribute("dbmanager");
-        
+
         String filename = "";
         try{    
             MultipartRequest multi = new MultipartRequest(request, f.getAbsolutePath(), 10*1024*1024, "ISO-8859-1", new DefaultFileRenamePolicy());
@@ -71,7 +73,7 @@ public class ServletUpload extends HttpServlet {
             if(post != null){
                 String data = new Date().toString();
                 if(filename != null){
-                    post = post + " <a href=\"file/" +filename+ "?op=allegato&gname="+gname+"&gadmin="+gadmin+"\" target=\"_blank\">"+filename+"</a>";
+                    post = post + " <a href=\"file/" +filename+ "?op=allegato&gid="+gid+"\" target=\"_blank\">"+filename+"</a>";
                 }    
                 manager.aggiornapost(post, Functions.getUserName(request), gname, gadmin, data);
             }
@@ -83,4 +85,53 @@ public class ServletUpload extends HttpServlet {
         }
         response.sendRedirect(redirect);
     }
-}  
+    
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletPDF.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletPDF.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}
+  

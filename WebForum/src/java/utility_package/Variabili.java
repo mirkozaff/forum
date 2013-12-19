@@ -30,4 +30,8 @@ public class Variabili {
     public static final String AVATAR = "avatar";
     
     public static final String GID = "gid";
+    
+    public static final String GNAME = "gname";
+    
+    public static final String GADMIN = "gadmin";
 }
