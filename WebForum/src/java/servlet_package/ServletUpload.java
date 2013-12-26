@@ -44,6 +44,8 @@ public class ServletUpload extends HttpServlet {
         if(request.getParameter(Variabili.OP).equals(Variabili.PROFILE_IMG)){
             filePath = Variabili.PATH_PROFILE_IMG + Functions.getUserName(request);
             redirect = "/WebForum/servletDatiUtente";
+            //setto a true cosi so che sto uploadando un immagine profilo
+            // invece che un file di allegato
             imgChange = true;
         }
         else if(request.getParameter(Variabili.OP).equals(Variabili.TESTO)){
@@ -70,7 +72,7 @@ public class ServletUpload extends HttpServlet {
                 manager.setImageURL(Functions.getUserName(request), filename, request.getSession());
                 imgChange = false;
             }
-            if(post != null){
+            else if(post != null){
                 String data = new Date().toString();
                 if(filename != null){
                     post = post + " <a href=\"file/" +filename+ "?op=allegato&gid="+gid+"\" target=\"_blank\">"+filename+"</a>";
