@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utility_package.Functions;
 import utility_package.Post;
+import utility_package.Variabili;
 
 public class ServletVisualizzaPost extends HttpServlet {
     private DBmanager manager;
@@ -26,8 +27,8 @@ public class ServletVisualizzaPost extends HttpServlet {
             throws ServletException, IOException, SQLException {
         
         //ricavo il nome e l'autore del gruppo a cui vuole accedere l'utente
-        String gname =request.getParameter("gname");
-        String gadmin=request.getParameter("gadmin");
+        String gname = request.getParameter(Variabili.GNAME);
+        String gadmin = request.getParameter(Variabili.GADMIN);
         
         ArrayList<Post> listapost = new ArrayList<Post>();
        

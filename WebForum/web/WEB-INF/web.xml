@@ -9,6 +9,7 @@
         <filter-name>filtro</filter-name>
         <url-pattern>/servletMainPage</url-pattern>
         <url-pattern>/servletLogin</url-pattern>
+        <url-pattern>/servletVisualizzaPost</url-pattern>
     </filter-mapping>
     
     <servlet>

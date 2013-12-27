@@ -171,6 +171,27 @@ public class DBmanager implements Serializable{
         }
      }
       
+      public boolean accessAllowed(String gname, String gadmin, String userName) throws SQLException{
+        PreparedStatement stm = con.prepareStatement("SELECT DISTINCT UTENTE FROM gruppi WHERE GNAME=? AND GADMIN=?");
+        try{
+            stm.setString(1, gname);
+            stm.setString(2, gadmin);
+            ResultSet rs = stm.executeQuery();
+            try{
+                while(rs.next()){
+                    if(rs.getString(1) == userName){
+                        return true;
+                    }
+                }
+            } finally {
+                rs.close();
+            }
+        }finally {
+            stm.close();
+        }
+        return false;
+     }
+      
       public int getMaxID() throws SQLException{
           int a = 0;
           PreparedStatement stm = con.prepareStatement("SELECT MAX(ID) FROM Gruppi"); 

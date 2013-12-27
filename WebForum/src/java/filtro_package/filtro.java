@@ -1,9 +1,13 @@
 package filtro_package;
 
+import db_package.DBmanager;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -13,11 +17,14 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import utility_package.Functions;
+import utility_package.Variabili;
 
 
 public class filtro implements Filter {
     
     private static final boolean debug = true;
+    private DBmanager manager;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
@@ -104,8 +111,29 @@ public class filtro implements Filter {
             res.sendRedirect("/WebForum/servletLogin");
             
         }
-        if(session != null && req.getRequestURI().equals("/WebForum/servletLogin")){
+        else if(session != null && req.getRequestURI().equals("/WebForum/servletLogin")){
             res.sendRedirect("/WebForum/servletCheckLogin");
+        }
+        else if(req.getRequestURI().equals("/WebForum/servletVisualizzaPost")){
+            
+            try {
+                String userName = Functions.getUserName(req);
+                String gname = request.getParameter(Variabili.GNAME);
+                String gadmin = request.getParameter(Variabili.GADMIN);
+                System.out.println("ho chiamato il filtro dei gruppi");
+                
+                if(manager.accessAllowed(gname, gadmin, userName)){
+                    System.out.println("filtro: hai il permesso per accedere alla pagina");
+                    res.sendRedirect("/WebForum/servletVisualizzaPost");
+
+                }
+                else if(!manager.accessAllowed(gname, gadmin, userName)){
+                    res.sendError(HttpServletResponse.SC_NOT_FOUND);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(filtro.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
         else{
             chain.doFilter(request, response);
