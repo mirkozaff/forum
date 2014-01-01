@@ -179,7 +179,7 @@ public class DBmanager implements Serializable{
             ResultSet rs = stm.executeQuery();
             try{
                 while(rs.next()){
-                    if(rs.getString(1) == userName){
+                    if(rs.getString(1).equals(userName)){
                         return true;
                     }
                 }

@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -101,6 +102,7 @@ public class filtro implements Filter {
             FilterChain chain)
             throws IOException, ServletException {
      
+        this.manager = (DBmanager) getFilterConfig().getServletContext().getAttribute("dbmanager");
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
@@ -121,14 +123,14 @@ public class filtro implements Filter {
                 String gname = request.getParameter(Variabili.GNAME);
                 String gadmin = request.getParameter(Variabili.GADMIN);
                 System.out.println("ho chiamato il filtro dei gruppi");
-                
                 if(manager.accessAllowed(gname, gadmin, userName)){
-                    System.out.println("filtro: hai il permesso per accedere alla pagina");
-                    res.sendRedirect("/WebForum/servletVisualizzaPost");
+                    System.out.println("filtro: hai il permesso per accedere alla pagina gruppi");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/servletVisualizzaPost");
+                    dispatcher.forward(request, response);
 
                 }
                 else if(!manager.accessAllowed(gname, gadmin, userName)){
-                    res.sendError(HttpServletResponse.SC_NOT_FOUND);
+                    res.sendError(HttpServletResponse.SC_FORBIDDEN);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(filtro.class.getName()).log(Level.SEVERE, null, ex);
