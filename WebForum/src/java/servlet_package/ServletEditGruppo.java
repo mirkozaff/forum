@@ -69,33 +69,46 @@ public class ServletEditGruppo extends HttpServlet {
                    out.println(text);
                }
            }
-           out.println("<form action=\"servletEditGruppoDB\" method=POST>");
-           out.println("<h1>nome gruppo </h1>"
-                   + "<input type=\"text\" name=\"nomegruppo\"");
+           out.println("<div class=\"contenitore-azzurro\">");
+           out.println("<form action=\"servletEditGruppoDB\" method=POST role=\"form\">");
+           out.println("<div class=\"form-group\"> "
+                   + "<label>Nome del gruppo</label> "
+                   + "<input type=\"text\" class=\"form-control\" name=\"nomegruppo\"");
            //se nella chiamata ho passato il parametro gname lo metto nel placeholder
            if(modifica){
            out.println("value=\""+gname+"\">");
-           out.println("<input type=\"hidden\" name=\"gname\" value=\""+gname+"\"> ");
+           out.println("<input type=\"hidden\" name=\"gname\" value=\""+gname+"\"> "
+                   + "</div>");
            }else{
-           out.println(">");
+           out.println(">"
+                   + "</div>");
            }
-           out.println("<h1>chi vuoi invitare? </h1><br>");
            
+           out.println("<div class=\"form-group\"> "
+                   + "<label>invita i tuoi amici</label>");
+       
            //visualizzo le checkbox con gli utenti invitabili
            if(!listavisualizzata.isEmpty()){
            for(int i=0;i<listavisualizzata.size();i++){
-               out.println("<input type=\"checkbox\" name=\"utente\" value=\""+listavisualizzata.get(i)+"\">"+listavisualizzata.get(i)+"<br>");
+               out.println("<div class=\"checkbox\">"
+                       + "<label>"
+                       + "<input type=\"checkbox\" name=\"utente\" value=\""+listavisualizzata.get(i)+"\">"+listavisualizzata.get(i)+"</label>"
+                       + "</div>");
            }
-           }else{out.println("<p>non ci sono utenti da invitare</p>");}
+           }else{out.println("<p class=\"testorosso\">non ci sono utenti da invitare</p>");}
            
            if(modifica){
-           out.println("<input class=\"btn btn-lg btn-success\" type=\"submit\" name=\"bottone\" value=\"modifica\">"
+           out.println("<div class=\"centra\">"
+                   + "<input class=\"btn btn-lg btn-success\" type=\"submit\" name=\"bottone\" value=\"modifica gruppo\">"
+                   + "</div>"
                    + "</form>");
            }else{
-           out.println("<input class=\"btn btn-lg btn-success\" type=\"submit\" name=\"bottone\" value=\"crea\">"
+           out.println("<div class=\"centra\">"
+                   + "<input class=\"btn btn-lg btn-success\" type=\"submit\" name=\"bottone\" value=\"crea gruppo\">"
+                   + "</div>"
                    + "</form>");    
            }
-            out.println("</td></tr></table></div><div class=\"col-md-4\"></div></div>"
+            out.println("</div></div><div class=\"col-md-4\"></div></div>"
                         + "<script src=\"bootstrapJS/jquery.js\"></script>"
                         + "<script src=\"bootstrapJS/bootstrap.min.js\"></script>"
                         + "</body>"

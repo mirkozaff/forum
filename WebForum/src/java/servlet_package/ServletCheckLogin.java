@@ -55,7 +55,7 @@ public class ServletCheckLogin extends HttpServlet {
             manager.getImageURL(Functions.getUserName(request), request.getSession());
 
             //aggiungo il cookie della data ultimo accesso
-            lastAccessedTime.setMaxAge(1000);
+            lastAccessedTime.setMaxAge(86400);
             response.addCookie(lastAccessedTime);
             
             // rimando alla Main Page
