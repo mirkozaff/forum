@@ -38,17 +38,25 @@ public class ServletDatiUtente extends HttpServlet {
                    out.println(text);
                }
             }
-            out.println("<img src=\"file/"
+            out.println("<div class=\"contenitore-azzurro\">"
+                    +"<img src=\"file/"
                     + Functions.getUserIMG(request)
                     + "?op=img_profilo\""
-                    + "\" alt=\"no image.\" onerror=\"src=\'/WebForum/forumIMG/default-no-profile-pic.jpg'\" class=\"img-rounded center-block\" style=\"width: 400px\"> "
-                    + "</div>"
-                    + "</div>"
-                    + "<form action=\"servletUpload?op=img_profilo\" method=POST enctype=\"multipart/form-data\">"
+                    + "\" alt=\"no image.\" onerror=\"src=\'/WebForum/forumIMG/default-no-profile-pic.jpg'\" class=\"img-rounded center-block\" style=\"width: 400px\">"
+                    + "<br>"
+                    + "<div class=\"centra\">"
+                    + "<form class=\"form-inline\" action=\"servletUpload?op=img_profilo\" method=POST enctype=\"multipart/form-data\">"
+                    + "<div class=\"form-group\">"
                     + "<input type=file name=file1>"
+                    + "</div>"
+                    + "<div class=\"form-group\">"
                     + "<input class=\"btn btn-lg btn-success\" type=\"submit\" value=\"Upload\">"
+                    + "</div>"
                     + "</form>"
                     + "</div>"
+                    + "</div>"
+                    + "</div>"
+                    + "<div class=\"col-md-4\"></div>"
                     + "</body>"
                     + "</html>");
         } finally {
