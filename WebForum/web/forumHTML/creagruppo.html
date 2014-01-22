@@ -15,6 +15,16 @@
 		<![endif]-->
 	  </head>
 	  <body>
+              
+              <SCRIPT LANGUAGE="JavaScript">
+function contr() {
+if(document.forms['modulo'].elements['nomegruppo'].value==""){
+alert("il campo \"nome del gruppo\" non puo' essere vuoto");
+return false;
+}
+return true;
+}
+</SCRIPT>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
                     &nbsp;
                     <a href="servletMainPage"><button type="button" class="btn btn-primary navbar-btn">HOME</button></a>

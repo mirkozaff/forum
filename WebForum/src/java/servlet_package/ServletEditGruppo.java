@@ -70,7 +70,7 @@ public class ServletEditGruppo extends HttpServlet {
                }
            }
            out.println("<div class=\"contenitore-azzurro\">");
-           out.println("<form action=\"servletEditGruppoDB\" method=POST role=\"form\">");
+           out.println("<form action=\"servletEditGruppoDB\" method=POST name=\"modulo\" onSubmit=\"return contr()\">");
            out.println("<div class=\"form-group\"> "
                    + "<label>Nome del gruppo</label> "
                    + "<input type=\"text\" class=\"form-control\" name=\"nomegruppo\"");
