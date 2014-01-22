@@ -7,13 +7,14 @@
     margin-left: 200px;
     margin-right: 200px;
     padding-bottom: 50px;
+    padding-left: 20px; 
     border-radius: 20px;
 }
 
 .box {
 width: auto;
 height: 125px;
-margin: 0 auto;
+margin-right: 25%;
 overflow: auto;
 border: 1px solid #428bca;
 padding: 2px;
