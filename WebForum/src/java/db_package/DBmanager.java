@@ -231,9 +231,10 @@ public class DBmanager implements Serializable{
                 stm2.setString(3, adminname);
                 stm2.setString(4, adminname);
                 stm2.setBoolean(5, false);
-                stm2.execute();                
+                stm2.execute();
                 
                 //aggiorno il db con il record riguardante gli invitati (gname, admin, admin)
+                if(utentiNuovoGruppo!=null){
                 for(int i=0; i<utentiNuovoGruppo.length;i++){
                 stm2.setInt(1, idValue+1);
                 stm2.setString(2, gname);
@@ -241,6 +242,7 @@ public class DBmanager implements Serializable{
                 stm2.setString(4, adminname);
                 stm2.setBoolean(5, true);
                 stm2.execute();
+                }
                 }
             }else{
                 System.out.println(" gruppo e admin gia esistenti");

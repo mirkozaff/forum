@@ -30,10 +30,10 @@ DBmanager manager;
         String bottone =request.getParameter("bottone");
         String gname = request.getParameter("gname");
 
-        if(bottone.toString().equals("crea")){
+        if(bottone.toString().equals("crea gruppo")){
         //provo a creare il gruppo richiesto
         manager.aggiornalistagruppi(nomegruppo,Functions.getUserName(request), utentiNuovoGruppo);
-        }else if(bottone.toString().equals("modifica") && gname.toString()!=null){
+        }else if(bottone.toString().equals("modifica gruppo") && gname.toString()!=null){
         manager.modificagruppo(gname, nomegruppo, Functions.getUserName(request), utentiNuovoGruppo);
         }
         
