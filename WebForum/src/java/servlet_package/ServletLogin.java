@@ -47,6 +47,7 @@ public class ServletLogin extends HttpServlet {
                         + "<button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Login</button>"
                         + "</form>"
                         + "</div>"
+                        + "</div>"
                         + "</body>"
                         + "</html>");
         }finally {

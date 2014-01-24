@@ -103,14 +103,14 @@ public class ServletMainPage extends HttpServlet {
                         + "<table class=\"table\">");
             if(listagname.size()!=0){
             for(int i=0;i<listagname.size();i++){
-            out.println("<tr>"
+            out.println("<tr class=\"colore-caselle\">"
                     + "<td>"
                     + listagname.get(i)+" di "+listagadmin.get(i)
                     + "</td>"
                     + "<td>"
-                    + "<form action=\"servletRisposteInviti\" method=POST><div>"                  
+                    + "<form action=\"servletRisposteInviti\" method=POST>"                  
                     + "<button type=\"submit\" class=\"btn btn-danger\" name=\"bottone\" value=\"rifiuta\">Rifiuta</button>&nbsp;"
-                    + "<button type=\"submit\" class=\"btn btn-success\" name=\"bottone\" value=\"accetta\">accetta</button></div>"
+                    + "<button type=\"submit\" class=\"btn btn-success\" name=\"bottone\" value=\"accetta\">accetta</button>"
                     + "<input type=\"hidden\" name=\"gname\" value=\""+listagname.get(i)+"\">"
                     + "<input type=\"hidden\" name=\"gadmin\" value=\""+listagadmin.get(i)+"\">"              
                     + "</form>"

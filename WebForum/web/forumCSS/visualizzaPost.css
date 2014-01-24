@@ -1,4 +1,8 @@
 
+body {
+    background-image: url(../forumIMG/22-sfondo-multicolori.jpg);
+}
+
 .navbar-default{
  background-color: #b3d0e9;
 }
