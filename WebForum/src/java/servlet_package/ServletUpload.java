@@ -68,7 +68,8 @@ public class ServletUpload extends HttpServlet {
             Enumeration files = multi.getFileNames();
             String name = (String)files.nextElement();
             filename = multi.getFilesystemName(name);
-            if(imgChange){
+            String mimeType = getServletContext().getMimeType(filename);
+            if(imgChange && mimeType.startsWith("image")){
                 manager.setImageURL(Functions.getUserName(request), filename, request.getSession());
                 imgChange = false;
             }
